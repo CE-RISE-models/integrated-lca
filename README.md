@@ -8,35 +8,134 @@ Repository for the data model used to represent integrated LCA results, includin
 ---
 
 ## Data Model Structure
-Put here description of data model structure.
+
+The Integrated Life Cycle Analysis data model provides a **flexible framework** for capturing LCA results across environmental, social, and economic dimensions. Rather than prescribing specific indicators, this model allows results to reference external indicator standards and methodologies, enabling compatibility with various LCA methods and evolving standards.
+
+**Core Philosophy**: This model provides a structure for:
+- **"What indicators were assessed?"** → References to standard indicators (ISO, ILCD, ReCiPe, etc.)
+- **"What are the results?"** → Numeric values with units, uncertainty ranges
+- **"Which method was used?"** → Method name, version, characterization factors
+- **"How reliable are the results?"** → Data quality, completeness, uncertainty
+- **"What standards apply?"** → ISO 14040/14044, PEF, EPD, specific sector standards
 
 ### Key Design Principles
 
+1. **Triple Bottom Line Structure**: Environmental, Social, and Economic impacts organized hierarchically
+2. **Method Transparency**: Clear documentation of impact assessment methods and characterization models
+3. **Uncertainty Quantification**: Confidence intervals, sensitivity analysis results
+4. **Comparability**: Standardized units and normalization factors
+5. **Interoperability**: Alignment with ISO 14040/14044, GHG Protocol, and social LCA guidelines
 
 ### Core Hierarchy
 
 ```
-JustAnExample (root)
-├── 1. GeneralProductInformation
-│   ├── LotBatchNumber
-│   ├── GTIN14
-│   ├── SerialNumber
-│   ├── ProductImages
-│   ├── ProductType
-│   └── UniqueProductIdentifier
-
+IntegratedLCAResults (root)
+├── LCAAnalysisInstance (repeatable - multiple analyses possible)
+│   ├── 1. LCAStudyMetadata
+│   │   ├── StudyIdentifier (REQUIRED - unique UUID)
+│   │   ├── StudyName
+│   │   ├── StudyDate
+│   │   ├── CommissionerInfo
+│   │   │   ├── OrganizationName
+│   │   │   └── ContactInfo
+│   │   ├── PractitionerInfo
+│   │   │   ├── OrganizationName
+│   │   │   ├── AuthorName
+│   │   │   └── ContactInfo
+│   │   ├── SoftwareInfo
+│   │   │   ├── SoftwareName (SimaPro, openLCA, GaBi, etc.)
+│   │   │   ├── SoftwareVersion
+│   │   │   └── CalculationTimestamp
+│   │   ├── DatabaseInfo
+│   │   │   ├── BackgroundDatabase (ecoinvent, GaBi, etc.)
+│   │   │   ├── DatabaseVersion
+│   │   │   └── DataQualityInfo
+│   │   ├── StudyScope
+│   │   ├── FunctionalUnit
+│   │   └── SystemBoundaries
+│   ├── 2. ImpactAssessmentResults
+│   ├── ImpactCategory (repeatable)
+│   │   ├── CategoryIdentifier (URI/code from standard)
+│   │   ├── CategoryName
+│   │   ├── ImpactMethod (ReCiPe, ILCD, etc.)
+│   │   ├── IndicatorResult
+│   │   │   ├── NumericValue
+│   │   │   ├── Unit
+│   │   │   └── UncertaintyRange
+│   │   └── CharacterizationFactors
+│   │   └── AggregatedScores
+│   │       ├── SingleScore
+│   │       ├── NormalizedValues
+│   │       └── WeightedResults
+│   ├── 3. InventoryResults
+│   │   ├── ElementaryFlows (repeatable)
+│   │   ├── FlowIdentifier (from reference database)
+│   │   │   ├── FlowAmount
+│   │   │   ├── FlowUnit
+│   │   │   └── FlowCompartment
+│   │   └── IntermediateFlows
+│   │       ├── ProductFlows
+│   │       └── WasteFlows
+│   ├── 4. InterpretationResults
+│   │   ├── DataQualityAssessment
+│   │   │   ├── CompletenessCheck
+│   │   │   ├── SensitivityAnalysis
+│   │   │   └── ConsistencyCheck
+│   │   ├── UncertaintyAnalysis
+│   │   │   ├── ParameterUncertainty
+│   │   │   ├── ModelUncertainty
+│   │   │   └── ScenarioUncertainty
+│   │   └── Limitations
+│   │       ├── DataGaps
+│   │       ├── MethodologicalChoices
+│   │       └── Assumptions
+│   └── 5. StandardCompliance
+│       ├── ApplicableStandards (ISO 14040, PEF, etc.)
+│       ├── MethodReference (link to method documentation)
+│       ├── IndicatorSetReference (ILCD, ReCiPe indicators)
+│       └── ValidationStatus
 ```
 
 ### Workflow Sequence
 
-#### **Step 1: Just another example** 
-Basic product identification with multiple identifier types:
-- **LotBatchNumber**: Lot/batch tracking information
-- **GTIN14**: Global Trade Item Number (14-digit format with GS1 integration)
-- **SerialNumber**: Individual product serial numbers
-- **ProductImages**: Product images for branding/visual identification (comma-separated URLs)
-- **ProductType**: Product classification (3-digit GTIN prefix or alphanumeric code)
-- **UniqueProductIdentifier**: Enables web link to product passport
+#### **Step 1: LCAStudyMetadata** 
+Complete metadata for each LCA analysis instance:
+- **StudyIdentifier**: REQUIRED unique UUID for the LCA instance
+- **PractitionerInfo**: Author/institution conducting the analysis
+- **SoftwareInfo**: LCA software and version used (SimaPro, openLCA, GaBi, Brightway, etc.)
+- **DatabaseInfo**: Background database and version (ecoinvent 3.9, GaBi 2023, etc.)
+- **FunctionalUnit**: Reference basis for all calculations (e.g., "1 kg of product")
+- **SystemBoundaries**: Cradle-to-gate, cradle-to-grave, or gate-to-gate
+- **StudyScope**: Goal, intended application, target audience
+
+*Note: Multiple LCAAnalysisInstance objects can exist for the same product system, each with different methods, assumptions, or temporal snapshots.*
+
+#### **Step 2: ImpactAssessmentResults**
+Flexible structure for any impact indicators:
+- **ImpactCategory**: Repeatable structure that references external indicator definitions
+- **CategoryIdentifier**: URI or code pointing to standard indicator (e.g., ILCD:climate-change)
+- **IndicatorResult**: Numeric value with unit and uncertainty
+- **ImpactMethod**: Which method/version was used (ReCiPe 2016, ILCD 2.0, etc.)
+
+#### **Step 3: InventoryResults**
+Raw inventory data if needed:
+- **ElementaryFlows**: References to standard flow databases (ecoinvent, ILCD)
+- **FlowIdentifier**: UUID or URI from reference database
+- **FlowAmount**: Quantity with unit
+- **IntermediateFlows**: Product and waste flows
+
+#### **Step 4: InterpretationResults**
+Quality and reliability assessment:
+- **DataQualityAssessment**: Completeness, sensitivity, consistency checks
+- **UncertaintyAnalysis**: Parameter, model, and scenario uncertainties
+- **Limitations**: Documented data gaps and assumptions
+
+#### **Step 5: StandardCompliance**
+Links to external standards and methods:
+- **ApplicableStandards**: Which LCA standards were followed
+- **MethodReference**: Link to full method documentation
+- **IndicatorSetReference**: Which indicator set was used (with version)
+- **ValidationStatus**: Third-party verification status
 
 ### Data Properties
 
@@ -46,20 +145,21 @@ Each class has a corresponding value property (e.g., `name_value`, `company_id_v
 
 Every data point in the model includes a `sql_identifier` annotation that serves as a unique, machine-friendly database identifier. These identifiers follow a structured namespace pattern to ensure uniqueness across the entire data model:
 
-**Pattern**: `MODEL_[category]_[specific_name]`
+**Pattern**: `lca_[category]_[specific_name]`
 
 **Features:**
-- **Product Profile Prefix**: All identifiers start, for instance, with `pro_` to clearly identify them as belonging to the Product Profile data model
+- **LCA Prefix**: All identifiers start with `lca_` to clearly identify them as belonging to the Integrated LCA data model
 - **Hierarchical Namespacing**: Uses category prefixes (`gen_info_`, `mfr_info_`, `imp_info_`, `spec_info_`) to provide context and prevent naming conflicts
 - **Database-Friendly**: Uses underscores and avoids special characters for SQL compatibility
 - **Unique Across Model**: No duplicate identifiers, even when similar concepts appear in different parts of the hierarchy
 - **Reasonable Length**: Abbreviated but meaningful names that balance clarity with practical database usage
 
 **Examples:**
-- `pro_gen_info_gtin14` - GTIN-14 identifier in General Product Information
-- `pro_mfr_info_facility` - Manufacturing facility in Manufacturer Information  
-- `pro_imp_info_eori` - EORI number in Import/Export Information
-- `pro_spec_info_materials` - Material composition in Product Specifications
+- `lca_study_functional_unit` - Functional unit in study metadata
+- `lca_impact_category_id` - Impact category identifier
+- `lca_impact_result_value` - Numeric result value
+- `lca_inventory_flow_amount` - Elementary flow amount
+- `lca_method_reference` - Reference to method documentation
 
 This identifier system enables seamless integration with databases and ensures clear data model composition when combining with other CE-RISE data models.
 
@@ -69,9 +169,19 @@ This identifier system enables seamless integration with databases and ensures c
 
 | Step | Component | Criticalities Identified | Solutions Implemented | Status | Missing/TODO |
 |------|-----------|-------------------------|----------------------|--------|--------------|
-| **1** | **ExampleExampleExample** | • Unique product identifier lacks precision and standards<br>• No reference integration with discoverability/registries<br>• Missing serial number and lot number storage<br>• No connection to standard product nomenclature<br>• No product description and branding<br>• No classification for grouping products | • Added GS1 prefix and ontology integration<br>• Implemented GTIN-14 + serial number approach<br>• Added Schema.org prefix<br>• Created GTIN-14, Serial number, Lot/batch number subclasses<br>• Added ProductImages (comma-separated image URLs with format validation)<br>• Added ProductType (3-digit GTIN prefix or alphanumeric classification)<br>• Referenced UNTP framework for discoverability | **COMPLETED** | • UNTP Identity Resolver integration 
+| **1** | **LCAStudyMetadata** | • Need for unique study identification<br>• Variable system boundaries<br>• Different functional units<br>• Commissioner/practitioner tracking | • UUID-based study identifiers<br>• Flexible boundary definitions<br>• Standardized functional unit format<br>• Clear actor identification | **PLANNED** | • Study registry integration<br>• Automated metadata extraction |
+| **2** | **ImpactAssessmentResults** | • Multiple indicator standards<br>• Evolving impact methods<br>• Need for flexibility<br>• Method versioning | • Reference-based indicator system<br>• Support for any impact method<br>• Version tracking for methods<br>• URI/UUID for indicators | **PLANNED** | • Indicator registry APIs<br>• Automatic method updates<br>• Cross-method mapping |
+| **3** | **InventoryResults** | • Multiple flow databases<br>• Flow naming inconsistencies<br>• Unit conversions<br>• Compartment classifications | • Reference to standard flow lists<br>• UUID-based flow identification<br>• Standard unit system<br>• Compartment ontology | **PLANNED** | • Flow database connectors<br>• Automatic unit conversion<br>• Flow mapping services |
+| **4** | **InterpretationResults** | • Quality assessment standards<br>• Uncertainty quantification<br>• Sensitivity analysis methods<br>• Documentation requirements | • Pedigree matrix implementation<br>• Multiple uncertainty methods<br>• Standardized sensitivity metrics<br>• Structured limitations | **PLANNED** | • Automated quality scoring<br>• Uncertainty propagation tools |
+| **5** | **StandardCompliance** | • Multiple LCA standards<br>• Method documentation links<br>• Indicator set versions<br>• Validation tracking | • Standard reference system<br>• External method links<br>• Version control for indicators<br>• Validation status fields | **PLANNED** | • Standard compliance checker<br>• Automated validation |
 
 ### Integration Opportunities
+
+- **LCA Software**: Integration with openLCA, SimaPro, GaBi, Brightway
+- **Impact Methods**: ReCiPe 2016, IMPACT World+, TRACI, CML-IA
+- **Databases**: ecoinvent, GaBi databases, Agri-footprint, Social Hotspots Database
+- **Standards**: ISO 14040 series, GHG Protocol, UNEP/SETAC S-LCA guidelines
+- **Reporting**: Environmental Product Declarations (EPD), Product Environmental Footprint (PEF)
 
 
 
