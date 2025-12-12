@@ -54,19 +54,25 @@ IntegratedLCAResults (root)
 │   │   ├── FunctionalUnit
 │   │   └── SystemBoundaries
 │   ├── 2. ImpactAssessmentResults
-│   ├── ImpactCategory (repeatable)
-│   │   ├── CategoryIdentifier (URI/code from standard)
-│   │   ├── CategoryName
-│   │   ├── ImpactMethod (ReCiPe, ILCD, etc.)
-│   │   ├── IndicatorResult
-│   │   │   ├── NumericValue
-│   │   │   ├── Unit
-│   │   │   └── UncertaintyRange
-│   │   └── CharacterizationFactors
-│   │   └── AggregatedScores
-│   │       ├── SingleScore
-│   │       ├── NormalizedValues
-│   │       └── WeightedResults
+│   │   └── ImpactCategory (repeatable)
+│   │       ├── CategoryIdentifier (URI/code from standard)
+│   │       ├── CategoryName
+│   │       ├── ImpactMethod (ReCiPe, ILCD, etc.)
+│   │       ├── MethodVersion
+│   │       ├── IndicatorResult
+│   │       │   ├── NumericValue
+│   │       │   ├── Unit
+│   │       │   └── UncertaintyRange
+│   │       │       ├── LowerBound
+│   │       │       ├── UpperBound
+│   │       │       └── DistributionType
+│   │       ├── CharacterizationFactors
+│   │       └── AggregatedScores
+│   │           ├── SingleScore
+│   │           ├── SingleScoreUnit
+│   │           ├── NormalizedValue
+│   │           ├── WeightedResult
+│   │           └── WeightingSet
 │   ├── 3. InventoryResults
 │   │   ├── ProductSystemReference (URI/ID to product-system model)
 │   │   ├── ProductSystemVersion (version used for calculation)
@@ -89,7 +95,9 @@ IntegratedLCAResults (root)
 │       ├── ApplicableStandards (ISO 14040, PEF, etc.)
 │       ├── MethodReference (link to method documentation)
 │       ├── IndicatorSetReference (ILCD, ReCiPe indicators)
-│       └── ValidationStatus
+│       ├── ValidationStatus
+│       ├── ValidationDate
+│       └── ValidatorInfo
 ```
 
 ### Workflow Sequence
@@ -110,8 +118,12 @@ Complete metadata for each LCA analysis instance:
 Flexible structure for any impact indicators:
 - **ImpactCategory**: Repeatable structure that references external indicator definitions
 - **CategoryIdentifier**: URI or code pointing to standard indicator (e.g., ILCD:climate-change)
-- **IndicatorResult**: Numeric value with unit and uncertainty
-- **ImpactMethod**: Which method/version was used (ReCiPe 2016, ILCD 2.0, etc.)
+- **CategoryName**: Human-readable name of the impact category
+- **ImpactMethod**: Which method was used (ReCiPe 2016, ILCD 2.0, etc.)
+- **MethodVersion**: Version of the impact method
+- **IndicatorResult**: Numeric value with unit and uncertainty range
+- **CharacterizationFactors**: Reference to characterization factors used
+- **AggregatedScores**: Optional single score, normalized, and weighted results
 
 #### **Step 3: InventoryResults**
 References to the product system data used (no duplication):
@@ -128,10 +140,12 @@ Quality and reliability assessment:
 
 #### **Step 5: StandardCompliance**
 Links to external standards and methods:
-- **ApplicableStandards**: Which LCA standards were followed
+- **ApplicableStandards**: Which LCA standards were followed (can be multiple)
 - **MethodReference**: Link to full method documentation
 - **IndicatorSetReference**: Which indicator set was used (with version)
 - **ValidationStatus**: Third-party verification status
+- **ValidationDate**: Date of validation or verification
+- **ValidatorInfo**: Information about the validating organization or person
 
 ### How to Represent the Three Components of Integrated LCA
 
@@ -209,11 +223,11 @@ This identifier system enables seamless integration with databases and ensures c
 
 | Step | Component | Criticalities Identified | Solutions Implemented | Status | Missing/TODO |
 |------|-----------|-------------------------|----------------------|--------|--------------|
-| **1** | **LCAStudyMetadata** | • Need for unique study identification<br>• Variable system boundaries<br>• Different functional units<br>• Commissioner/practitioner tracking | • UUID-based study identifiers<br>• Flexible boundary definitions<br>• Standardized functional unit format<br>• Clear actor identification | **PLANNED** | • Study registry integration<br>• Automated metadata extraction |
-| **2** | **ImpactAssessmentResults** | • Multiple indicator standards<br>• Evolving impact methods<br>• Need for flexibility<br>• Method versioning | • Reference-based indicator system<br>• Support for any impact method<br>• Version tracking for methods<br>• URI/UUID for indicators | **PLANNED** | • Indicator registry APIs<br>• Automatic method updates<br>• Cross-method mapping |
-| **3** | **InventoryResults** | • Avoiding data duplication<br>• Maintaining traceability<br>• Version control of inputs<br>• Detecting source changes | • Reference-only approach<br>• Link to product-system model<br>• Version tracking<br>• Optional checksums | **PLANNED** | • Automatic reference validation<br>• Version compatibility checks<br>• Change detection alerts |
-| **4** | **InterpretationResults** | • Quality assessment standards<br>• Uncertainty quantification<br>• Sensitivity analysis methods<br>• Documentation requirements | • Pedigree matrix implementation<br>• Multiple uncertainty methods<br>• Standardized sensitivity metrics<br>• Structured limitations | **PLANNED** | • Automated quality scoring<br>• Uncertainty propagation tools |
-| **5** | **StandardCompliance** | • Multiple LCA standards<br>• Method documentation links<br>• Indicator set versions<br>• Validation tracking | • Standard reference system<br>• External method links<br>• Version control for indicators<br>• Validation status fields | **PLANNED** | • Standard compliance checker<br>• Automated validation |
+| **1** | **LCAStudyMetadata** | • Need for unique study identification<br>• Variable system boundaries<br>• Different functional units<br>• Commissioner/practitioner tracking | • UUID-based study identifiers<br>• Flexible boundary definitions<br>• Standardized functional unit format<br>• Clear actor identification | **COMPLETED** | • Study registry integration<br>• Automated metadata extraction |
+| **2** | **ImpactAssessmentResults** | • Multiple indicator standards<br>• Evolving impact methods<br>• Need for flexibility<br>• Method versioning | • Reference-based indicator system<br>• Support for any impact method<br>• Version tracking for methods<br>• URI/UUID for indicators | **COMPLETED** | • Indicator registry APIs<br>• Automatic method updates<br>• Cross-method mapping |
+| **3** | **InventoryResults** | • Avoiding data duplication<br>• Maintaining traceability<br>• Version control of inputs<br>• Detecting source changes | • Reference-only approach<br>• Link to product-system model<br>• Version tracking<br>• Optional checksums | **COMPLETED** | • Automatic reference validation<br>• Version compatibility checks<br>• Change detection alerts |
+| **4** | **InterpretationResults** | • Quality assessment standards<br>• Uncertainty quantification<br>• Sensitivity analysis methods<br>• Documentation requirements | • Pedigree matrix implementation<br>• Multiple uncertainty methods<br>• Standardized sensitivity metrics<br>• Structured limitations | **COMPLETED** | • Automated quality scoring<br>• Uncertainty propagation tools |
+| **5** | **StandardCompliance** | • Multiple LCA standards<br>• Method documentation links<br>• Indicator set versions<br>• Validation tracking | • Standard reference system<br>• External method links<br>• Version control for indicators<br>• Validation status fields | **COMPLETED** | • Standard compliance checker<br>• Automated validation |
 
 ### Integration Opportunities
 
