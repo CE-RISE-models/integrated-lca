@@ -430,22 +430,22 @@ classes:
         attributes:
             study_identifier:
                 description: "Unique identifier for this LCA study"
-                range: study_identifier_value
+                range: string
             study_name:
                 description: "Name of the LCA study"
-                range: study_name_value
+                range: string
             study_date:
                 description: "Date of the LCA study"
-                range: study_date_value
+                range: date
             study_scope:
                 description: "Scope and goal of the study"
-                range: study_scope_value
+                range: string
             functional_unit:
                 description: "Functional unit for the analysis"
-                range: functional_unit_value
+                range: string
             system_boundaries:
                 description: "System boundaries definition"
-                range: system_boundaries_value
+                range: string
             commissioner_info:
                 description: "Information about who commissioned the study"
                 range: CommissionerInfo
@@ -464,49 +464,49 @@ classes:
         attributes:
             organization_name:
                 description: "Commissioning organization name"
-                range: commissioner_organization_name_value
+                range: string
             contact_info:
                 description: "Contact information"
-                range: commissioner_contact_value
+                range: string
 
     PractitionerInfo:
         description: "Information about the LCA practitioner"
         attributes:
             organization_name:
                 description: "Practitioner organization name"
-                range: practitioner_organization_name_value
+                range: string
             author_name:
                 description: "Study author name(s)"
-                range: practitioner_author_name_value
+                range: string
             contact_info:
                 description: "Practitioner contact information"
-                range: practitioner_contact_value
+                range: string
 
     SoftwareInfo:
         description: "Information about the LCA software used"
         attributes:
             software_name:
                 description: "Name of LCA software"
-                range: software_name_value
+                range: string
             software_version:
                 description: "Software version"
-                range: software_version_value
+                range: string
             calculation_timestamp:
                 description: "When calculations were performed"
-                range: calculation_timestamp_value
+                range: datetime
 
     DatabaseInfo:
         description: "Information about background databases used"
         attributes:
             background_database:
                 description: "Background database name"
-                range: background_database_value
+                range: string
             database_version:
                 description: "Database version"
-                range: database_version_value
+                range: string
             data_quality_info:
                 description: "Data quality information"
-                range: data_quality_info_value
+                range: string
 
     ImpactAssessmentResults:
         description: "Container for all impact assessment results across environmental, social, and economic dimensions"
@@ -521,22 +521,22 @@ classes:
         attributes:
             category_identifier:
                 description: "Standard identifier for this impact category"
-                range: category_identifier_value
+                range: string
             category_name:
                 description: "Name of the impact category"
-                range: category_name_value
+                range: string
             impact_method:
                 description: "Impact assessment method used"
-                range: impact_method_value
+                range: string
             method_version:
                 description: "Version of the impact method"
-                range: impact_method_version_value
+                range: string
             indicator_result:
                 description: "Primary indicator result"
                 range: IndicatorResult
             characterization_factors:
                 description: "Reference to characterization factors"
-                range: characterization_factors_value
+                range: string
             aggregated_scores:
                 description: "Optional aggregated scoring results"
                 range: AggregatedScores
@@ -546,10 +546,10 @@ classes:
         attributes:
             numeric_value:
                 description: "The calculated impact value"
-                range: numeric_value_value
+                range: float
             unit:
                 description: "Unit of measurement"
-                range: result_unit_value
+                range: string
             uncertainty_range:
                 description: "Uncertainty information for the result"
                 range: UncertaintyRange
@@ -559,48 +559,48 @@ classes:
         attributes:
             lower_bound:
                 description: "Lower uncertainty bound"
-                range: uncertainty_lower_value
+                range: float
             upper_bound:
                 description: "Upper uncertainty bound"
-                range: uncertainty_upper_value
+                range: float
             distribution_type:
                 description: "Type of uncertainty distribution"
-                range: uncertainty_distribution_value
+                range: string
 
     AggregatedScores:
         description: "Aggregated assessment scores (single score, normalized, weighted)"
         attributes:
             single_score:
                 description: "Aggregated single score value"
-                range: single_score_value
+                range: float
             single_score_unit:
                 description: "Unit of the single score"
-                range: single_score_unit_value
+                range: string
             normalized_value:
                 description: "Normalized result"
-                range: normalized_value_value
+                range: float
             weighted_result:
                 description: "Weighted result"
-                range: weighted_result_value
+                range: float
             weighting_set:
                 description: "Reference to weighting set used"
-                range: weighting_set_value
+                range: string
 
     InventoryResults:
         description: "References to the product system data used (no duplication)"
         attributes:
             product_system_reference:
                 description: "Reference to product-system model"
-                range: product_system_reference_value
+                range: string
             product_system_version:
                 description: "Version of product system used"
-                range: product_system_version_value
+                range: string
             calculation_date:
                 description: "When inventory was accessed"
-                range: calculation_date_value
+                range: datetime
             inventory_checksum:
                 description: "Optional checksum for change detection"
-                range: inventory_checksum_value
+                range: string
 
     InterpretationResults:
         description: "Quality assessment and interpretation of LCA results"
@@ -620,58 +620,59 @@ classes:
         attributes:
             completeness_check:
                 description: "Assessment of data completeness"
-                range: completeness_check_value
+                range: string
             sensitivity_analysis:
                 description: "Sensitivity analysis results"
-                range: sensitivity_analysis_value
+                range: string
             consistency_check:
                 description: "Assessment of data consistency"
-                range: consistency_check_value
+                range: string
 
     UncertaintyAnalysis:
         description: "Analysis of different uncertainty sources"
         attributes:
             parameter_uncertainty:
                 description: "Uncertainty from parameters"
-                range: parameter_uncertainty_value
+                range: string
             model_uncertainty:
                 description: "Uncertainty from modeling choices"
-                range: model_uncertainty_value
+                range: string
             scenario_uncertainty:
                 description: "Uncertainty from scenarios"
-                range: scenario_uncertainty_value
+                range: string
 
     Limitations:
         description: "Documented study limitations"
         attributes:
             data_gaps:
                 description: "Identified data gaps"
-                range: data_gaps_value
+                range: string
             methodological_choices:
                 description: "Key methodological decisions"
-                range: methodological_choices_value
+                range: string
             assumptions:
                 description: "Key assumptions made"
-                range: assumptions_value
+                range: string
 
     StandardCompliance:
         description: "Information about standards compliance and validation"
         attributes:
             applicable_standards:
                 description: "LCA standards followed"
-                range: applicable_standards_value
+                range: string
+                multivalued: true
             method_reference:
                 description: "Reference to method documentation"
-                range: method_reference_value
+                range: string
             indicator_set_reference:
                 description: "Reference to indicator set"
-                range: indicator_set_reference_value
+                range: string
             validation_status:
                 description: "Validation/verification status"
-                range: validation_status_value
+                range: string
             validation_date:
                 description: "Date of validation"
-                range: validation_date_value
+                range: date
             validator_info:
                 description: "Validator information"
-                range: validator_info_value
+                range: string
