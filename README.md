@@ -1,9 +1,8 @@
-# CE-RISE Data Model Template
+# CE-RISE Integrated Life Cycle Analysis
 
-[![DOI](https://zenodo.org/badge/DOI/TOBEOBTAINED.svg)](https://doi.org/TOBEOBTAINED) [![Schemas](https://img.shields.io/badge/Schema%20Files-LinkML%2C%20JSON%2C%20SHACL%2C%20OWL-32CD32)](https://ce-rise-models.codeberg.page/<repo-name>/)
+[![DOI](https://zenodo.org/badge/DOI/TOBEOBTAINED.svg)](https://doi.org/TOBEOBTAINED) [![Schemas](https://img.shields.io/badge/Schema%20Files-LinkML%2C%20JSON%2C%20SHACL%2C%20OWL-32CD32)](https://ce-rise-models.codeberg.page/integrated-lca/)
 
-This repository provides the **official template** for creating CE-RISE data models.  
-It defines the standard structure, tooling, and workflow used across all model projects.
+Repository for the data model used to represent integrated LCA results, including environmental, social, and economic impact indicators, methodological metadata, calculation parameters, characterization choices, and assessment settings. The model captures outcomes of LCA computations, while underlying process and flow data are provided separately by the `product-system` model.
 
 
 ---
