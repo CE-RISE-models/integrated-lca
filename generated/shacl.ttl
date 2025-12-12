@@ -1,0 +1,519 @@
+@prefix lca: <https://ce-rise-models.codeberg.page/integrated-lca/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+lca:IntegratedLCAResults a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Root container for all LCA analysis instances for a product system" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class lca:LCAAnalysisInstance ;
+            sh:description "Collection of LCA analyses performed on this product system" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path lca:lca_analysis_instances ] ;
+    sh:targetClass lca:IntegratedLCAResults .
+
+lca:AggregatedScores a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Aggregated assessment scores (single score, normalized, weighted)" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Unit of the single score" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:single_score_unit ],
+        [ sh:datatype xsd:float ;
+            sh:description "Normalized result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:normalized_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Weighted result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path lca:weighted_result ],
+        [ sh:datatype xsd:float ;
+            sh:description "Aggregated single score value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:single_score ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to weighting set used" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path lca:weighting_set ] ;
+    sh:targetClass lca:AggregatedScores .
+
+lca:CommissionerInfo a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Information about the organization that commissioned the LCA" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Contact information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:contact_info ],
+        [ sh:datatype xsd:string ;
+            sh:description "Commissioning organization name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:organization_name ] ;
+    sh:targetClass lca:CommissionerInfo .
+
+lca:DataQualityAssessment a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Data quality evaluation results" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Assessment of data consistency" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:consistency_check ],
+        [ sh:datatype xsd:string ;
+            sh:description "Sensitivity analysis results" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:sensitivity_analysis ],
+        [ sh:datatype xsd:string ;
+            sh:description "Assessment of data completeness" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:completeness_check ] ;
+    sh:targetClass lca:DataQualityAssessment .
+
+lca:DatabaseInfo a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Information about background databases used" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Database version" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:database_version ],
+        [ sh:datatype xsd:string ;
+            sh:description "Data quality information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:data_quality_info ],
+        [ sh:datatype xsd:string ;
+            sh:description "Background database name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:background_database ] ;
+    sh:targetClass lca:DatabaseInfo .
+
+lca:ImpactAssessmentResults a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Container for all impact assessment results across environmental, social, and economic dimensions" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class lca:ImpactCategory ;
+            sh:description "Collection of impact categories assessed (environmental, social, economic)" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path lca:impact_categories ] ;
+    sh:targetClass lca:ImpactAssessmentResults .
+
+lca:ImpactCategory a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A single impact category with its assessment results" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Impact assessment method used" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:impact_method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the impact category" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:category_name ],
+        [ sh:class lca:AggregatedScores ;
+            sh:description "Optional aggregated scoring results" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 6 ;
+            sh:path lca:aggregated_scores ],
+        [ sh:class lca:IndicatorResult ;
+            sh:description "Primary indicator result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path lca:indicator_result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Standard identifier for this impact category" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:category_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Version of the impact method" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path lca:method_version ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to characterization factors" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path lca:characterization_factors ] ;
+    sh:targetClass lca:ImpactCategory .
+
+lca:IndicatorResult a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Numeric result with unit and uncertainty information" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class lca:UncertaintyRange ;
+            sh:description "Uncertainty information for the result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path lca:uncertainty_range ],
+        [ sh:datatype xsd:float ;
+            sh:description "The calculated impact value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:numeric_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of measurement" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:unit ] ;
+    sh:targetClass lca:IndicatorResult .
+
+lca:InterpretationResults a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Quality assessment and interpretation of LCA results" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class lca:UncertaintyAnalysis ;
+            sh:description "Analysis of various uncertainty sources" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path lca:uncertainty_analysis ],
+        [ sh:class lca:Limitations ;
+            sh:description "Documented limitations and caveats" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path lca:limitations ],
+        [ sh:class lca:DataQualityAssessment ;
+            sh:description "Assessment of data quality aspects" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path lca:data_quality_assessment ] ;
+    sh:targetClass lca:InterpretationResults .
+
+lca:InventoryResults a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "References to the product system data used (no duplication)" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Optional checksum for change detection" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path lca:inventory_checksum ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "When inventory was accessed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:calculation_date ],
+        [ sh:datatype xsd:string ;
+            sh:description "Version of product system used" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:product_system_version ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to product-system model" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:product_system_reference ] ;
+    sh:targetClass lca:InventoryResults .
+
+lca:LCAAnalysisInstance a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A single LCA analysis instance with complete metadata and results" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class lca:InventoryResults ;
+            sh:description "References to product system inventory data" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path lca:inventory_results ],
+        [ sh:class lca:StandardCompliance ;
+            sh:description "Standards and method references" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path lca:standard_compliance ],
+        [ sh:class lca:LCAStudyMetadata ;
+            sh:description "Complete metadata for this LCA analysis" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path lca:study_metadata ],
+        [ sh:class lca:InterpretationResults ;
+            sh:description "Interpretation and quality assessment" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path lca:interpretation_results ],
+        [ sh:class lca:ImpactAssessmentResults ;
+            sh:description "Impact assessment results" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path lca:impact_assessment_results ] ;
+    sh:targetClass lca:LCAAnalysisInstance .
+
+lca:LCAStudyMetadata a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Complete metadata for an LCA study instance" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Functional unit for the analysis" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path lca:functional_unit ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for this LCA study" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:study_identifier ],
+        [ sh:datatype xsd:date ;
+            sh:description "Date of the LCA study" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:study_date ],
+        [ sh:datatype xsd:string ;
+            sh:description "Scope and goal of the study" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path lca:study_scope ],
+        [ sh:class lca:PractitionerInfo ;
+            sh:description "Information about who conducted the study" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path lca:practitioner_info ],
+        [ sh:class lca:SoftwareInfo ;
+            sh:description "LCA software information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 8 ;
+            sh:path lca:software_info ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the LCA study" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:study_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "System boundaries definition" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path lca:system_boundaries ],
+        [ sh:class lca:DatabaseInfo ;
+            sh:description "Background database information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 9 ;
+            sh:path lca:database_info ],
+        [ sh:class lca:CommissionerInfo ;
+            sh:description "Information about who commissioned the study" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 6 ;
+            sh:path lca:commissioner_info ] ;
+    sh:targetClass lca:LCAStudyMetadata .
+
+lca:Limitations a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Documented study limitations" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Key assumptions made" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:assumptions ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identified data gaps" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:data_gaps ],
+        [ sh:datatype xsd:string ;
+            sh:description "Key methodological decisions" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:methodological_choices ] ;
+    sh:targetClass lca:Limitations .
+
+lca:PractitionerInfo a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Information about the LCA practitioner" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Study author name(s)" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:author_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Practitioner contact information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:contact_info ],
+        [ sh:datatype xsd:string ;
+            sh:description "Practitioner organization name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:organization_name ] ;
+    sh:targetClass lca:PractitionerInfo .
+
+lca:SoftwareInfo a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Information about the LCA software used" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Software version" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:software_version ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of LCA software" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:software_name ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "When calculations were performed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:calculation_timestamp ] ;
+    sh:targetClass lca:SoftwareInfo .
+
+lca:StandardCompliance a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Information about standards compliance and validation" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Reference to method documentation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:method_reference ],
+        [ sh:datatype xsd:string ;
+            sh:description "LCA standards followed" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:applicable_standards ],
+        [ sh:datatype xsd:string ;
+            sh:description "Validation/verification status" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path lca:validation_status ],
+        [ sh:datatype xsd:string ;
+            sh:description "Validator information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path lca:validator_info ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to indicator set" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:indicator_set_reference ],
+        [ sh:datatype xsd:date ;
+            sh:description "Date of validation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path lca:validation_date ] ;
+    sh:targetClass lca:StandardCompliance .
+
+lca:UncertaintyAnalysis a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Analysis of different uncertainty sources" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uncertainty from parameters" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:parameter_uncertainty ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uncertainty from scenarios" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:scenario_uncertainty ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uncertainty from modeling choices" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:model_uncertainty ] ;
+    sh:targetClass lca:UncertaintyAnalysis .
+
+lca:UncertaintyRange a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Uncertainty bounds and distribution information" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:float ;
+            sh:description "Upper uncertainty bound" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path lca:upper_bound ],
+        [ sh:datatype xsd:float ;
+            sh:description "Lower uncertainty bound" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path lca:lower_bound ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type of uncertainty distribution" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path lca:distribution_type ] ;
+    sh:targetClass lca:UncertaintyRange .
+
+

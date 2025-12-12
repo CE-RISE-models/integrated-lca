@@ -1,0 +1,678 @@
+id: https://ce-rise-models.codeberg.page/integrated-lca/
+name: integrated-lca
+title: CE-RISE Integrated Life Cycle Analysis Data Model
+description: >
+    Flexible framework for capturing LCA results across environmental, social, and economic dimensions,
+    including methodological metadata, impact assessment results, and data quality indicators.
+license: CC BY-NC 4.0
+version: 0.0.1
+
+prefixes:
+    linkml: https://w3id.org/linkml/
+    lca: https://ce-rise-models.codeberg.page/integrated-lca/
+    xsd: http://www.w3.org/2001/XMLSchema#
+    rdfs: http://www.w3.org/2000/01/rdf-schema#
+    dcterms: http://purl.org/dc/terms/
+    foaf: http://xmlns.com/foaf/0.1/
+    prov: http://www.w3.org/ns/prov#
+    qudt: http://qudt.org/schema/qudt/
+    iso: https://www.iso.org/standard/
+    ilcd: http://lca.jrc.ec.europa.eu/ILCD/
+    schema: http://schema.org/
+
+default_prefix: lca
+default_range: string
+
+imports:
+    - linkml:types
+
+slots:
+    # Step 1: LCAStudyMetadata slots
+    study_identifier_value:
+        description: "Unique UUID identifier for this LCA analysis instance"
+        range: string
+        required: true
+        annotations:
+            owl.filler: lca:study_identifier
+            sql_identifier: lca_study_identifier
+
+    study_name_value:
+        description: "Name or title of the LCA study"
+        range: string
+        annotations:
+            owl.filler: dcterms:title
+            sql_identifier: lca_study_name
+
+    study_date_value:
+        description: "Date when the LCA study was conducted"
+        range: date
+        annotations:
+            owl.filler: dcterms:date
+            sql_identifier: lca_study_date
+
+    study_scope_value:
+        description: "Scope, goal, and intended application of the LCA study"
+        range: string
+        annotations:
+            owl.filler: lca:study_scope
+            sql_identifier: lca_study_scope
+
+    functional_unit_value:
+        description: "Reference basis for all calculations (e.g., 1 kg of product)"
+        range: string
+        annotations:
+            owl.filler: ilcd:functionalUnit
+            sql_identifier: lca_study_functional_unit
+
+    system_boundaries_value:
+        description: "System boundaries definition (cradle-to-gate, cradle-to-grave, gate-to-gate)"
+        range: string
+        annotations:
+            owl.filler: ilcd:systemBoundaries
+            sql_identifier: lca_study_system_boundaries
+
+    # Commissioner Information slots
+    commissioner_organization_name_value:
+        description: "Name of the organization that commissioned the LCA study"
+        range: string
+        annotations:
+            owl.filler: foaf:Organization
+            sql_identifier: lca_commissioner_org_name
+
+    commissioner_contact_value:
+        description: "Contact information for the commissioning organization"
+        range: string
+        annotations:
+            owl.filler: schema:ContactPoint
+            sql_identifier: lca_commissioner_contact
+
+    # Practitioner Information slots
+    practitioner_organization_name_value:
+        description: "Name of the organization conducting the LCA"
+        range: string
+        annotations:
+            owl.filler: prov:Agent
+            sql_identifier: lca_practitioner_org_name
+
+    practitioner_author_name_value:
+        description: "Name of the LCA study author(s)"
+        range: string
+        annotations:
+            owl.filler: dcterms:creator
+            sql_identifier: lca_practitioner_author
+
+    practitioner_contact_value:
+        description: "Contact information for the LCA practitioner"
+        range: string
+        annotations:
+            owl.filler: schema:ContactPoint
+            sql_identifier: lca_practitioner_contact
+
+    # Software Information slots
+    software_name_value:
+        description: "Name of the LCA software used (SimaPro, openLCA, GaBi, Brightway, etc.)"
+        range: string
+        annotations:
+            owl.filler: prov:SoftwareAgent
+            sql_identifier: lca_software_name
+
+    software_version_value:
+        description: "Version of the LCA software"
+        range: string
+        annotations:
+            owl.filler: schema:softwareVersion
+            sql_identifier: lca_software_version
+
+    calculation_timestamp_value:
+        description: "Timestamp when LCA calculations were performed"
+        range: datetime
+        annotations:
+            owl.filler: prov:generatedAtTime
+            sql_identifier: lca_calculation_timestamp
+
+    # Database Information slots
+    background_database_value:
+        description: "Name of background database used (ecoinvent, GaBi, Agri-footprint, etc.)"
+        range: string
+        annotations:
+            owl.filler: dcterms:source
+            sql_identifier: lca_background_database
+
+    database_version_value:
+        description: "Version of the background database"
+        range: string
+        annotations:
+            owl.filler: dcterms:hasVersion
+            sql_identifier: lca_database_version
+
+    data_quality_info_value:
+        description: "Information about data quality from the database"
+        range: string
+        annotations:
+            owl.filler: ilcd:dataQualityIndicator
+            sql_identifier: lca_data_quality_info
+
+    # Step 2: ImpactAssessmentResults slots
+    category_identifier_value:
+        description: "URI or code pointing to standard indicator definition (e.g., ILCD:climate-change, SHDB:child-labor)"
+        range: string
+        annotations:
+            owl.filler: dcterms:identifier
+            sql_identifier: lca_impact_category_id
+
+    category_name_value:
+        description: "Human-readable name of the impact category"
+        range: string
+        annotations:
+            owl.filler: rdfs:label
+            sql_identifier: lca_impact_category_name
+
+    impact_method_value:
+        description: "Impact assessment method used (ReCiPe 2016, ILCD 2.0, UNEP/SETAC, etc.)"
+        range: string
+        annotations:
+            owl.filler: prov:hadPlan
+            sql_identifier: lca_impact_method
+
+    impact_method_version_value:
+        description: "Version of the impact assessment method"
+        range: string
+        annotations:
+            owl.filler: dcterms:hasVersion
+            sql_identifier: lca_impact_method_version
+
+    # Indicator Result slots
+    numeric_value_value:
+        description: "Numeric result of the impact assessment"
+        range: float
+        annotations:
+            owl.filler: qudt:numericValue
+            sql_identifier: lca_impact_result_value
+
+    result_unit_value:
+        description: "Unit of the impact assessment result"
+        range: string
+        annotations:
+            owl.filler: qudt:unit
+            sql_identifier: lca_impact_result_unit
+
+    uncertainty_lower_value:
+        description: "Lower bound of uncertainty range"
+        range: float
+        annotations:
+            owl.filler: lca:uncertaintyLower
+            sql_identifier: lca_impact_uncertainty_lower
+
+    uncertainty_upper_value:
+        description: "Upper bound of uncertainty range"
+        range: float
+        annotations:
+            owl.filler: lca:uncertaintyUpper
+            sql_identifier: lca_impact_uncertainty_upper
+
+    uncertainty_distribution_value:
+        description: "Type of uncertainty distribution (normal, lognormal, triangular, etc.)"
+        range: string
+        annotations:
+            owl.filler: lca:uncertaintyDistribution
+            sql_identifier: lca_impact_uncertainty_dist
+
+    # Characterization and Aggregation slots
+    characterization_factors_value:
+        description: "Reference to characterization factors used"
+        range: string
+        annotations:
+            owl.filler: lca:characterizationFactors
+            sql_identifier: lca_characterization_factors
+
+    single_score_value:
+        description: "Aggregated single score result"
+        range: float
+        annotations:
+            owl.filler: lca:singleScore
+            sql_identifier: lca_single_score
+
+    single_score_unit_value:
+        description: "Unit of the single score"
+        range: string
+        annotations:
+            owl.filler: qudt:unit
+            sql_identifier: lca_single_score_unit
+
+    normalized_value_value:
+        description: "Normalized impact assessment result"
+        range: float
+        annotations:
+            owl.filler: lca:normalizedValue
+            sql_identifier: lca_normalized_value
+
+    weighted_result_value:
+        description: "Weighted impact assessment result"
+        range: float
+        annotations:
+            owl.filler: lca:weightedResult
+            sql_identifier: lca_weighted_result
+
+    weighting_set_value:
+        description: "Reference to weighting set used"
+        range: string
+        annotations:
+            owl.filler: lca:weightingSet
+            sql_identifier: lca_weighting_set
+
+    # Step 3: InventoryResults slots (reference-only approach)
+    product_system_reference_value:
+        description: "URI or ID pointing to the product-system model used"
+        range: string
+        annotations:
+            owl.filler: prov:used
+            sql_identifier: lca_product_system_ref
+
+    product_system_version_value:
+        description: "Version of the product system used for calculation"
+        range: string
+        annotations:
+            owl.filler: dcterms:hasVersion
+            sql_identifier: lca_product_system_version
+
+    calculation_date_value:
+        description: "Date when inventory was accessed for this analysis"
+        range: datetime
+        annotations:
+            owl.filler: prov:atTime
+            sql_identifier: lca_inventory_calc_date
+
+    inventory_checksum_value:
+        description: "Checksum to detect if source data has changed"
+        range: string
+        annotations:
+            owl.filler: lca:dataChecksum
+            sql_identifier: lca_inventory_checksum
+
+    # Step 4: InterpretationResults slots
+    completeness_check_value:
+        description: "Results of completeness assessment"
+        range: string
+        annotations:
+            owl.filler: lca:completenessCheck
+            sql_identifier: lca_completeness_check
+
+    sensitivity_analysis_value:
+        description: "Results of sensitivity analysis"
+        range: string
+        annotations:
+            owl.filler: lca:sensitivityAnalysis
+            sql_identifier: lca_sensitivity_analysis
+
+    consistency_check_value:
+        description: "Results of consistency assessment"
+        range: string
+        annotations:
+            owl.filler: lca:consistencyCheck
+            sql_identifier: lca_consistency_check
+
+    parameter_uncertainty_value:
+        description: "Assessment of parameter uncertainty"
+        range: string
+        annotations:
+            owl.filler: lca:parameterUncertainty
+            sql_identifier: lca_parameter_uncertainty
+
+    model_uncertainty_value:
+        description: "Assessment of model uncertainty"
+        range: string
+        annotations:
+            owl.filler: lca:modelUncertainty
+            sql_identifier: lca_model_uncertainty
+
+    scenario_uncertainty_value:
+        description: "Assessment of scenario uncertainty"
+        range: string
+        annotations:
+            owl.filler: lca:scenarioUncertainty
+            sql_identifier: lca_scenario_uncertainty
+
+    data_gaps_value:
+        description: "Identified data gaps and missing information"
+        range: string
+        annotations:
+            owl.filler: lca:dataGaps
+            sql_identifier: lca_data_gaps
+
+    methodological_choices_value:
+        description: "Key methodological choices and their implications"
+        range: string
+        annotations:
+            owl.filler: lca:methodologicalChoices
+            sql_identifier: lca_methodological_choices
+
+    assumptions_value:
+        description: "Key assumptions made in the analysis"
+        range: string
+        annotations:
+            owl.filler: lca:assumptions
+            sql_identifier: lca_assumptions
+
+    # Step 5: StandardCompliance slots
+    applicable_standards_value:
+        description: "List of LCA standards followed (ISO 14040, PEF, EPD, etc.)"
+        range: string
+        multivalued: true
+        annotations:
+            owl.filler: dcterms:conformsTo
+            sql_identifier: lca_applicable_standards
+
+    method_reference_value:
+        description: "Link to full method documentation"
+        range: string
+        annotations:
+            owl.filler: dcterms:references
+            sql_identifier: lca_method_reference
+
+    indicator_set_reference_value:
+        description: "Reference to indicator set used (ILCD, ReCiPe, etc.) with version"
+        range: string
+        annotations:
+            owl.filler: lca:indicatorSet
+            sql_identifier: lca_indicator_set_ref
+
+    validation_status_value:
+        description: "Third-party validation or verification status"
+        range: string
+        annotations:
+            owl.filler: prov:qualifiedAttribution
+            sql_identifier: lca_validation_status
+
+    validation_date_value:
+        description: "Date of validation or verification"
+        range: date
+        annotations:
+            owl.filler: dcterms:dateAccepted
+            sql_identifier: lca_validation_date
+
+    validator_info_value:
+        description: "Information about the validating organization or person"
+        range: string
+        annotations:
+            owl.filler: prov:agent
+            sql_identifier: lca_validator_info
+
+classes:
+    IntegratedLCAResults:
+        description: "Root container for all LCA analysis instances for a product system"
+        attributes:
+            lca_analysis_instances:
+                description: "Collection of LCA analyses performed on this product system"
+                range: LCAAnalysisInstance
+                multivalued: true
+
+    LCAAnalysisInstance:
+        description: "A single LCA analysis instance with complete metadata and results"
+        attributes:
+            study_metadata:
+                description: "Complete metadata for this LCA analysis"
+                range: LCAStudyMetadata
+            impact_assessment_results:
+                description: "Impact assessment results"
+                range: ImpactAssessmentResults
+            inventory_results:
+                description: "References to product system inventory data"
+                range: InventoryResults
+            interpretation_results:
+                description: "Interpretation and quality assessment"
+                range: InterpretationResults
+            standard_compliance:
+                description: "Standards and method references"
+                range: StandardCompliance
+
+    LCAStudyMetadata:
+        description: "Complete metadata for an LCA study instance"
+        attributes:
+            study_identifier:
+                description: "Unique identifier for this LCA study"
+                range: string
+            study_name:
+                description: "Name of the LCA study"
+                range: string
+            study_date:
+                description: "Date of the LCA study"
+                range: date
+            study_scope:
+                description: "Scope and goal of the study"
+                range: string
+            functional_unit:
+                description: "Functional unit for the analysis"
+                range: string
+            system_boundaries:
+                description: "System boundaries definition"
+                range: string
+            commissioner_info:
+                description: "Information about who commissioned the study"
+                range: CommissionerInfo
+            practitioner_info:
+                description: "Information about who conducted the study"
+                range: PractitionerInfo
+            software_info:
+                description: "LCA software information"
+                range: SoftwareInfo
+            database_info:
+                description: "Background database information"
+                range: DatabaseInfo
+
+    CommissionerInfo:
+        description: "Information about the organization that commissioned the LCA"
+        attributes:
+            organization_name:
+                description: "Commissioning organization name"
+                range: string
+            contact_info:
+                description: "Contact information"
+                range: string
+
+    PractitionerInfo:
+        description: "Information about the LCA practitioner"
+        attributes:
+            organization_name:
+                description: "Practitioner organization name"
+                range: string
+            author_name:
+                description: "Study author name(s)"
+                range: string
+            contact_info:
+                description: "Practitioner contact information"
+                range: string
+
+    SoftwareInfo:
+        description: "Information about the LCA software used"
+        attributes:
+            software_name:
+                description: "Name of LCA software"
+                range: string
+            software_version:
+                description: "Software version"
+                range: string
+            calculation_timestamp:
+                description: "When calculations were performed"
+                range: datetime
+
+    DatabaseInfo:
+        description: "Information about background databases used"
+        attributes:
+            background_database:
+                description: "Background database name"
+                range: string
+            database_version:
+                description: "Database version"
+                range: string
+            data_quality_info:
+                description: "Data quality information"
+                range: string
+
+    ImpactAssessmentResults:
+        description: "Container for all impact assessment results across environmental, social, and economic dimensions"
+        attributes:
+            impact_categories:
+                description: "Collection of impact categories assessed (environmental, social, economic)"
+                range: ImpactCategory
+                multivalued: true
+
+    ImpactCategory:
+        description: "A single impact category with its assessment results"
+        attributes:
+            category_identifier:
+                description: "Standard identifier for this impact category"
+                range: string
+            category_name:
+                description: "Name of the impact category"
+                range: string
+            impact_method:
+                description: "Impact assessment method used"
+                range: string
+            method_version:
+                description: "Version of the impact method"
+                range: string
+            indicator_result:
+                description: "Primary indicator result"
+                range: IndicatorResult
+            characterization_factors:
+                description: "Reference to characterization factors"
+                range: string
+            aggregated_scores:
+                description: "Optional aggregated scoring results"
+                range: AggregatedScores
+
+    IndicatorResult:
+        description: "Numeric result with unit and uncertainty information"
+        attributes:
+            numeric_value:
+                description: "The calculated impact value"
+                range: float
+            unit:
+                description: "Unit of measurement"
+                range: string
+            uncertainty_range:
+                description: "Uncertainty information for the result"
+                range: UncertaintyRange
+
+    UncertaintyRange:
+        description: "Uncertainty bounds and distribution information"
+        attributes:
+            lower_bound:
+                description: "Lower uncertainty bound"
+                range: float
+            upper_bound:
+                description: "Upper uncertainty bound"
+                range: float
+            distribution_type:
+                description: "Type of uncertainty distribution"
+                range: string
+
+    AggregatedScores:
+        description: "Aggregated assessment scores (single score, normalized, weighted)"
+        attributes:
+            single_score:
+                description: "Aggregated single score value"
+                range: float
+            single_score_unit:
+                description: "Unit of the single score"
+                range: string
+            normalized_value:
+                description: "Normalized result"
+                range: float
+            weighted_result:
+                description: "Weighted result"
+                range: float
+            weighting_set:
+                description: "Reference to weighting set used"
+                range: string
+
+    InventoryResults:
+        description: "References to the product system data used (no duplication)"
+        attributes:
+            product_system_reference:
+                description: "Reference to product-system model"
+                range: string
+            product_system_version:
+                description: "Version of product system used"
+                range: string
+            calculation_date:
+                description: "When inventory was accessed"
+                range: datetime
+            inventory_checksum:
+                description: "Optional checksum for change detection"
+                range: string
+
+    InterpretationResults:
+        description: "Quality assessment and interpretation of LCA results"
+        attributes:
+            data_quality_assessment:
+                description: "Assessment of data quality aspects"
+                range: DataQualityAssessment
+            uncertainty_analysis:
+                description: "Analysis of various uncertainty sources"
+                range: UncertaintyAnalysis
+            limitations:
+                description: "Documented limitations and caveats"
+                range: Limitations
+
+    DataQualityAssessment:
+        description: "Data quality evaluation results"
+        attributes:
+            completeness_check:
+                description: "Assessment of data completeness"
+                range: string
+            sensitivity_analysis:
+                description: "Sensitivity analysis results"
+                range: string
+            consistency_check:
+                description: "Assessment of data consistency"
+                range: string
+
+    UncertaintyAnalysis:
+        description: "Analysis of different uncertainty sources"
+        attributes:
+            parameter_uncertainty:
+                description: "Uncertainty from parameters"
+                range: string
+            model_uncertainty:
+                description: "Uncertainty from modeling choices"
+                range: string
+            scenario_uncertainty:
+                description: "Uncertainty from scenarios"
+                range: string
+
+    Limitations:
+        description: "Documented study limitations"
+        attributes:
+            data_gaps:
+                description: "Identified data gaps"
+                range: string
+            methodological_choices:
+                description: "Key methodological decisions"
+                range: string
+            assumptions:
+                description: "Key assumptions made"
+                range: string
+
+    StandardCompliance:
+        description: "Information about standards compliance and validation"
+        attributes:
+            applicable_standards:
+                description: "LCA standards followed"
+                range: string
+                multivalued: true
+            method_reference:
+                description: "Reference to method documentation"
+                range: string
+            indicator_set_reference:
+                description: "Reference to indicator set"
+                range: string
+            validation_status:
+                description: "Validation/verification status"
+                range: string
+            validation_date:
+                description: "Date of validation"
+                range: date
+            validator_info:
+                description: "Validator information"
+                range: string

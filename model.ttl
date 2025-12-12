@@ -1,0 +1,1446 @@
+WARNING:linkml.generators.owlgen:Ambiguous attribute: organization_name https://ce-rise-models.codeberg.page/integrated-lca/organization_name
+WARNING:linkml.generators.owlgen:Ambiguous attribute: contact_info https://ce-rise-models.codeberg.page/integrated-lca/contact_info
+WARNING:linkml.generators.owlgen:Ambiguous attribute: organization_name https://ce-rise-models.codeberg.page/integrated-lca/organization_name
+WARNING:linkml.generators.owlgen:Ambiguous attribute: contact_info https://ce-rise-models.codeberg.page/integrated-lca/contact_info
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix lca: <https://ce-rise-models.codeberg.page/integrated-lca/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ce-rise-models.codeberg.page/integrated-lca/.owl.ttl> a owl:Ontology ;
+    rdfs:label "integrated-lca" ;
+    dcterms:license "CC BY-NC 4.0" ;
+    dcterms:title "CE-RISE Integrated Life Cycle Analysis Data Model" ;
+    pav:version "0.0.1" ;
+    skos:definition """Flexible framework for capturing LCA results across environmental, social, and economic dimensions, including methodological metadata, impact assessment results, and data quality indicators.
+""" .
+
+lca:IntegratedLCAResults a owl:Class ;
+    rdfs:label "IntegratedLCAResults" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:lca_analysis_instances ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:LCAAnalysisInstance ;
+            owl:onProperty lca:lca_analysis_instances ] ;
+    skos:definition "Root container for all LCA analysis instances for a product system" ;
+    skos:inScheme lca: .
+
+lca:applicable_standards_value a owl:DatatypeProperty ;
+    rdfs:label "applicable_standards_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "List of LCA standards followed (ISO 14040, PEF, EPD, etc.)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:conformsTo" ;
+    lca:sql_identifier "lca_applicable_standards" .
+
+lca:assumptions_value a owl:DatatypeProperty ;
+    rdfs:label "assumptions_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Key assumptions made in the analysis" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:assumptions" ;
+    lca:sql_identifier "lca_assumptions" .
+
+lca:background_database_value a owl:DatatypeProperty ;
+    rdfs:label "background_database_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of background database used (ecoinvent, GaBi, Agri-footprint, etc.)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:source" ;
+    lca:sql_identifier "lca_background_database" .
+
+lca:calculation_date_value a owl:DatatypeProperty ;
+    rdfs:label "calculation_date_value" ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "Date when inventory was accessed for this analysis" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:atTime" ;
+    lca:sql_identifier "lca_inventory_calc_date" .
+
+lca:calculation_timestamp_value a owl:DatatypeProperty ;
+    rdfs:label "calculation_timestamp_value" ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "Timestamp when LCA calculations were performed" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:generatedAtTime" ;
+    lca:sql_identifier "lca_calculation_timestamp" .
+
+lca:category_identifier_value a owl:DatatypeProperty ;
+    rdfs:label "category_identifier_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "URI or code pointing to standard indicator definition (e.g., ILCD:climate-change, SHDB:child-labor)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:identifier" ;
+    lca:sql_identifier "lca_impact_category_id" .
+
+lca:category_name_value a owl:DatatypeProperty ;
+    rdfs:label "category_name_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Human-readable name of the impact category" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "rdfs:label" ;
+    lca:sql_identifier "lca_impact_category_name" .
+
+lca:characterization_factors_value a owl:DatatypeProperty ;
+    rdfs:label "characterization_factors_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Reference to characterization factors used" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:characterizationFactors" ;
+    lca:sql_identifier "lca_characterization_factors" .
+
+lca:commissioner_contact_value a owl:DatatypeProperty ;
+    rdfs:label "commissioner_contact_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Contact information for the commissioning organization" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "schema:ContactPoint" ;
+    lca:sql_identifier "lca_commissioner_contact" .
+
+lca:commissioner_organization_name_value a owl:DatatypeProperty ;
+    rdfs:label "commissioner_organization_name_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the organization that commissioned the LCA study" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "foaf:Organization" ;
+    lca:sql_identifier "lca_commissioner_org_name" .
+
+lca:completeness_check_value a owl:DatatypeProperty ;
+    rdfs:label "completeness_check_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Results of completeness assessment" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:completenessCheck" ;
+    lca:sql_identifier "lca_completeness_check" .
+
+lca:consistency_check_value a owl:DatatypeProperty ;
+    rdfs:label "consistency_check_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Results of consistency assessment" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:consistencyCheck" ;
+    lca:sql_identifier "lca_consistency_check" .
+
+lca:data_gaps_value a owl:DatatypeProperty ;
+    rdfs:label "data_gaps_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Identified data gaps and missing information" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:dataGaps" ;
+    lca:sql_identifier "lca_data_gaps" .
+
+lca:data_quality_info_value a owl:DatatypeProperty ;
+    rdfs:label "data_quality_info_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Information about data quality from the database" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "ilcd:dataQualityIndicator" ;
+    lca:sql_identifier "lca_data_quality_info" .
+
+lca:database_version_value a owl:DatatypeProperty ;
+    rdfs:label "database_version_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Version of the background database" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:hasVersion" ;
+    lca:sql_identifier "lca_database_version" .
+
+lca:functional_unit_value a owl:DatatypeProperty ;
+    rdfs:label "functional_unit_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Reference basis for all calculations (e.g., 1 kg of product)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "ilcd:functionalUnit" ;
+    lca:sql_identifier "lca_study_functional_unit" .
+
+lca:impact_method_value a owl:DatatypeProperty ;
+    rdfs:label "impact_method_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Impact assessment method used (ReCiPe 2016, ILCD 2.0, UNEP/SETAC, etc.)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:hadPlan" ;
+    lca:sql_identifier "lca_impact_method" .
+
+lca:impact_method_version_value a owl:DatatypeProperty ;
+    rdfs:label "impact_method_version_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Version of the impact assessment method" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:hasVersion" ;
+    lca:sql_identifier "lca_impact_method_version" .
+
+lca:indicator_set_reference_value a owl:DatatypeProperty ;
+    rdfs:label "indicator_set_reference_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Reference to indicator set used (ILCD, ReCiPe, etc.) with version" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:indicatorSet" ;
+    lca:sql_identifier "lca_indicator_set_ref" .
+
+lca:inventory_checksum_value a owl:DatatypeProperty ;
+    rdfs:label "inventory_checksum_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Checksum to detect if source data has changed" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:dataChecksum" ;
+    lca:sql_identifier "lca_inventory_checksum" .
+
+lca:method_reference_value a owl:DatatypeProperty ;
+    rdfs:label "method_reference_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Link to full method documentation" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:references" ;
+    lca:sql_identifier "lca_method_reference" .
+
+lca:methodological_choices_value a owl:DatatypeProperty ;
+    rdfs:label "methodological_choices_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Key methodological choices and their implications" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:methodologicalChoices" ;
+    lca:sql_identifier "lca_methodological_choices" .
+
+lca:model_uncertainty_value a owl:DatatypeProperty ;
+    rdfs:label "model_uncertainty_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Assessment of model uncertainty" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:modelUncertainty" ;
+    lca:sql_identifier "lca_model_uncertainty" .
+
+lca:normalized_value_value a owl:DatatypeProperty ;
+    rdfs:label "normalized_value_value" ;
+    rdfs:range xsd:float ;
+    skos:definition "Normalized impact assessment result" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:normalizedValue" ;
+    lca:sql_identifier "lca_normalized_value" .
+
+lca:numeric_value_value a owl:DatatypeProperty ;
+    rdfs:label "numeric_value_value" ;
+    rdfs:range xsd:float ;
+    skos:definition "Numeric result of the impact assessment" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "qudt:numericValue" ;
+    lca:sql_identifier "lca_impact_result_value" .
+
+lca:parameter_uncertainty_value a owl:DatatypeProperty ;
+    rdfs:label "parameter_uncertainty_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Assessment of parameter uncertainty" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:parameterUncertainty" ;
+    lca:sql_identifier "lca_parameter_uncertainty" .
+
+lca:practitioner_author_name_value a owl:DatatypeProperty ;
+    rdfs:label "practitioner_author_name_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the LCA study author(s)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:creator" ;
+    lca:sql_identifier "lca_practitioner_author" .
+
+lca:practitioner_contact_value a owl:DatatypeProperty ;
+    rdfs:label "practitioner_contact_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Contact information for the LCA practitioner" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "schema:ContactPoint" ;
+    lca:sql_identifier "lca_practitioner_contact" .
+
+lca:practitioner_organization_name_value a owl:DatatypeProperty ;
+    rdfs:label "practitioner_organization_name_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the organization conducting the LCA" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:Agent" ;
+    lca:sql_identifier "lca_practitioner_org_name" .
+
+lca:product_system_reference_value a owl:DatatypeProperty ;
+    rdfs:label "product_system_reference_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "URI or ID pointing to the product-system model used" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:used" ;
+    lca:sql_identifier "lca_product_system_ref" .
+
+lca:product_system_version_value a owl:DatatypeProperty ;
+    rdfs:label "product_system_version_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Version of the product system used for calculation" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:hasVersion" ;
+    lca:sql_identifier "lca_product_system_version" .
+
+lca:result_unit_value a owl:DatatypeProperty ;
+    rdfs:label "result_unit_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Unit of the impact assessment result" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "qudt:unit" ;
+    lca:sql_identifier "lca_impact_result_unit" .
+
+lca:scenario_uncertainty_value a owl:DatatypeProperty ;
+    rdfs:label "scenario_uncertainty_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Assessment of scenario uncertainty" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:scenarioUncertainty" ;
+    lca:sql_identifier "lca_scenario_uncertainty" .
+
+lca:sensitivity_analysis_value a owl:DatatypeProperty ;
+    rdfs:label "sensitivity_analysis_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Results of sensitivity analysis" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:sensitivityAnalysis" ;
+    lca:sql_identifier "lca_sensitivity_analysis" .
+
+lca:single_score_unit_value a owl:DatatypeProperty ;
+    rdfs:label "single_score_unit_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Unit of the single score" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "qudt:unit" ;
+    lca:sql_identifier "lca_single_score_unit" .
+
+lca:single_score_value a owl:DatatypeProperty ;
+    rdfs:label "single_score_value" ;
+    rdfs:range xsd:float ;
+    skos:definition "Aggregated single score result" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:singleScore" ;
+    lca:sql_identifier "lca_single_score" .
+
+lca:software_name_value a owl:DatatypeProperty ;
+    rdfs:label "software_name_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the LCA software used (SimaPro, openLCA, GaBi, Brightway, etc.)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:SoftwareAgent" ;
+    lca:sql_identifier "lca_software_name" .
+
+lca:software_version_value a owl:DatatypeProperty ;
+    rdfs:label "software_version_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Version of the LCA software" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "schema:softwareVersion" ;
+    lca:sql_identifier "lca_software_version" .
+
+lca:study_date_value a owl:DatatypeProperty ;
+    rdfs:label "study_date_value" ;
+    rdfs:range xsd:date ;
+    skos:definition "Date when the LCA study was conducted" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:date" ;
+    lca:sql_identifier "lca_study_date" .
+
+lca:study_identifier_value a owl:DatatypeProperty ;
+    rdfs:label "study_identifier_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Unique UUID identifier for this LCA analysis instance" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:study_identifier" ;
+    lca:sql_identifier "lca_study_identifier" .
+
+lca:study_name_value a owl:DatatypeProperty ;
+    rdfs:label "study_name_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name or title of the LCA study" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:title" ;
+    lca:sql_identifier "lca_study_name" .
+
+lca:study_scope_value a owl:DatatypeProperty ;
+    rdfs:label "study_scope_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Scope, goal, and intended application of the LCA study" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:study_scope" ;
+    lca:sql_identifier "lca_study_scope" .
+
+lca:system_boundaries_value a owl:DatatypeProperty ;
+    rdfs:label "system_boundaries_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "System boundaries definition (cradle-to-gate, cradle-to-grave, gate-to-gate)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "ilcd:systemBoundaries" ;
+    lca:sql_identifier "lca_study_system_boundaries" .
+
+lca:uncertainty_distribution_value a owl:DatatypeProperty ;
+    rdfs:label "uncertainty_distribution_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Type of uncertainty distribution (normal, lognormal, triangular, etc.)" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:uncertaintyDistribution" ;
+    lca:sql_identifier "lca_impact_uncertainty_dist" .
+
+lca:uncertainty_lower_value a owl:DatatypeProperty ;
+    rdfs:label "uncertainty_lower_value" ;
+    rdfs:range xsd:float ;
+    skos:definition "Lower bound of uncertainty range" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:uncertaintyLower" ;
+    lca:sql_identifier "lca_impact_uncertainty_lower" .
+
+lca:uncertainty_upper_value a owl:DatatypeProperty ;
+    rdfs:label "uncertainty_upper_value" ;
+    rdfs:range xsd:float ;
+    skos:definition "Upper bound of uncertainty range" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:uncertaintyUpper" ;
+    lca:sql_identifier "lca_impact_uncertainty_upper" .
+
+lca:validation_date_value a owl:DatatypeProperty ;
+    rdfs:label "validation_date_value" ;
+    rdfs:range xsd:date ;
+    skos:definition "Date of validation or verification" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "dcterms:dateAccepted" ;
+    lca:sql_identifier "lca_validation_date" .
+
+lca:validation_status_value a owl:DatatypeProperty ;
+    rdfs:label "validation_status_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Third-party validation or verification status" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:qualifiedAttribution" ;
+    lca:sql_identifier "lca_validation_status" .
+
+lca:validator_info_value a owl:DatatypeProperty ;
+    rdfs:label "validator_info_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Information about the validating organization or person" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "prov:agent" ;
+    lca:sql_identifier "lca_validator_info" .
+
+lca:weighted_result_value a owl:DatatypeProperty ;
+    rdfs:label "weighted_result_value" ;
+    rdfs:range xsd:float ;
+    skos:definition "Weighted impact assessment result" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:weightedResult" ;
+    lca:sql_identifier "lca_weighted_result" .
+
+lca:weighting_set_value a owl:DatatypeProperty ;
+    rdfs:label "weighting_set_value" ;
+    rdfs:range xsd:string ;
+    skos:definition "Reference to weighting set used" ;
+    skos:inScheme lca: ;
+    lca:owl.filler "lca:weightingSet" ;
+    lca:sql_identifier "lca_weighting_set" .
+
+lca:AggregatedScores a owl:Class ;
+    rdfs:label "AggregatedScores" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:weighting_set ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:normalized_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:weighting_set ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:single_score_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:weighted_result ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:single_score ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:normalized_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty lca:weighted_result ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty lca:normalized_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:weighted_result ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:single_score_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:weighting_set ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:single_score ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:single_score_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty lca:single_score ] ;
+    skos:definition "Aggregated assessment scores (single score, normalized, weighted)" ;
+    skos:inScheme lca: .
+
+lca:CommissionerInfo a owl:Class ;
+    rdfs:label "CommissionerInfo" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:organization_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:organization_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:organization_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:contact_info ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:contact_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:contact_info ] ;
+    skos:definition "Information about the organization that commissioned the LCA" ;
+    skos:inScheme lca: .
+
+lca:DataQualityAssessment a owl:Class ;
+    rdfs:label "DataQualityAssessment" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:consistency_check ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:consistency_check ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:consistency_check ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:completeness_check ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:sensitivity_analysis ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:sensitivity_analysis ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:completeness_check ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:sensitivity_analysis ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:completeness_check ] ;
+    skos:definition "Data quality evaluation results" ;
+    skos:inScheme lca: .
+
+lca:DatabaseInfo a owl:Class ;
+    rdfs:label "DatabaseInfo" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:data_quality_info ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:background_database ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:database_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:background_database ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:background_database ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:data_quality_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:database_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:data_quality_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:database_version ] ;
+    skos:definition "Information about background databases used" ;
+    skos:inScheme lca: .
+
+lca:ImpactAssessmentResults a owl:Class ;
+    rdfs:label "ImpactAssessmentResults" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom lca:ImpactCategory ;
+            owl:onProperty lca:impact_categories ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:impact_categories ] ;
+    skos:definition "Container for all impact assessment results across environmental, social, and economic dimensions" ;
+    skos:inScheme lca: .
+
+lca:ImpactCategory a owl:Class ;
+    rdfs:label "ImpactCategory" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:indicator_result ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:method_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:category_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:characterization_factors ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:IndicatorResult ;
+            owl:onProperty lca:indicator_result ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:impact_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:characterization_factors ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:AggregatedScores ;
+            owl:onProperty lca:aggregated_scores ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:indicator_result ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:category_identifier ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:method_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:method_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:characterization_factors ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:impact_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:category_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:category_identifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:category_identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:category_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:aggregated_scores ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:aggregated_scores ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:impact_method ] ;
+    skos:definition "A single impact category with its assessment results" ;
+    skos:inScheme lca: .
+
+lca:IndicatorResult a owl:Class ;
+    rdfs:label "IndicatorResult" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty lca:numeric_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:uncertainty_range ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:numeric_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:numeric_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:UncertaintyRange ;
+            owl:onProperty lca:uncertainty_range ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:uncertainty_range ] ;
+    skos:definition "Numeric result with unit and uncertainty information" ;
+    skos:inScheme lca: .
+
+lca:InterpretationResults a owl:Class ;
+    rdfs:label "InterpretationResults" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:uncertainty_analysis ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:UncertaintyAnalysis ;
+            owl:onProperty lca:uncertainty_analysis ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:uncertainty_analysis ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:limitations ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:Limitations ;
+            owl:onProperty lca:limitations ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:data_quality_assessment ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:data_quality_assessment ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:limitations ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:DataQualityAssessment ;
+            owl:onProperty lca:data_quality_assessment ] ;
+    skos:definition "Quality assessment and interpretation of LCA results" ;
+    skos:inScheme lca: .
+
+lca:InventoryResults a owl:Class ;
+    rdfs:label "InventoryResults" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:calculation_date ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:inventory_checksum ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:product_system_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:product_system_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:product_system_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:inventory_checksum ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:calculation_date ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:product_system_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty lca:calculation_date ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:product_system_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:product_system_reference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:inventory_checksum ] ;
+    skos:definition "References to the product system data used (no duplication)" ;
+    skos:inScheme lca: .
+
+lca:LCAAnalysisInstance a owl:Class ;
+    rdfs:label "LCAAnalysisInstance" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom lca:InventoryResults ;
+            owl:onProperty lca:inventory_results ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:InterpretationResults ;
+            owl:onProperty lca:interpretation_results ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:StandardCompliance ;
+            owl:onProperty lca:standard_compliance ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:interpretation_results ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:ImpactAssessmentResults ;
+            owl:onProperty lca:impact_assessment_results ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:study_metadata ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:standard_compliance ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:interpretation_results ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:standard_compliance ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:impact_assessment_results ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:impact_assessment_results ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:inventory_results ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:LCAStudyMetadata ;
+            owl:onProperty lca:study_metadata ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:inventory_results ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:study_metadata ] ;
+    skos:definition "A single LCA analysis instance with complete metadata and results" ;
+    skos:inScheme lca: .
+
+lca:LCAStudyMetadata a owl:Class ;
+    rdfs:label "LCAStudyMetadata" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:commissioner_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:date ;
+            owl:onProperty lca:study_date ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:CommissionerInfo ;
+            owl:onProperty lca:commissioner_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:software_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:system_boundaries ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:study_date ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:practitioner_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:functional_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:functional_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:study_scope ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:functional_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:PractitionerInfo ;
+            owl:onProperty lca:practitioner_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:database_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:study_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:study_scope ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:system_boundaries ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:practitioner_info ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:study_identifier ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:commissioner_info ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:database_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:study_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:study_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:software_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:DatabaseInfo ;
+            owl:onProperty lca:database_info ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:system_boundaries ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:study_date ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:study_identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom lca:SoftwareInfo ;
+            owl:onProperty lca:software_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:study_scope ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:study_identifier ] ;
+    skos:definition "Complete metadata for an LCA study instance" ;
+    skos:inScheme lca: .
+
+lca:Limitations a owl:Class ;
+    rdfs:label "Limitations" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:assumptions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:data_gaps ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:methodological_choices ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:data_gaps ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:methodological_choices ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:methodological_choices ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:assumptions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:data_gaps ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:assumptions ] ;
+    skos:definition "Documented study limitations" ;
+    skos:inScheme lca: .
+
+lca:PractitionerInfo a owl:Class ;
+    rdfs:label "PractitionerInfo" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:contact_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:author_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:author_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:organization_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:contact_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:author_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:organization_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:organization_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:contact_info ] ;
+    skos:definition "Information about the LCA practitioner" ;
+    skos:inScheme lca: .
+
+lca:SoftwareInfo a owl:Class ;
+    rdfs:label "SoftwareInfo" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:calculation_timestamp ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:calculation_timestamp ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:software_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:software_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty lca:calculation_timestamp ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:software_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:software_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:software_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:software_name ] ;
+    skos:definition "Information about the LCA software used" ;
+    skos:inScheme lca: .
+
+lca:StandardCompliance a owl:Class ;
+    rdfs:label "StandardCompliance" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:validator_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:date ;
+            owl:onProperty lca:validation_date ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:validator_info ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:validation_date ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:indicator_set_reference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:validation_status ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:applicable_standards ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:applicable_standards ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:validation_status ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:indicator_set_reference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:validation_status ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:method_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:method_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:validation_date ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:validator_info ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:method_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:indicator_set_reference ] ;
+    skos:definition "Information about standards compliance and validation" ;
+    skos:inScheme lca: .
+
+lca:UncertaintyAnalysis a owl:Class ;
+    rdfs:label "UncertaintyAnalysis" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:parameter_uncertainty ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:scenario_uncertainty ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:model_uncertainty ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:scenario_uncertainty ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:model_uncertainty ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:parameter_uncertainty ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:parameter_uncertainty ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:model_uncertainty ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:scenario_uncertainty ] ;
+    skos:definition "Analysis of different uncertainty sources" ;
+    skos:inScheme lca: .
+
+lca:UncertaintyRange a owl:Class ;
+    rdfs:label "UncertaintyRange" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:upper_bound ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:upper_bound ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:distribution_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:distribution_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty lca:lower_bound ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty lca:lower_bound ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty lca:lower_bound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty lca:upper_bound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty lca:distribution_type ] ;
+    skos:definition "Uncertainty bounds and distribution information" ;
+    skos:inScheme lca: .
+
+lca:applicable_standards a owl:DatatypeProperty ;
+    rdfs:label "applicable_standards" ;
+    skos:definition "LCA standards followed" ;
+    skos:inScheme lca: .
+
+lca:impact_categories a owl:ObjectProperty ;
+    rdfs:label "impact_categories" ;
+    skos:definition "Collection of impact categories assessed (environmental, social, economic)" ;
+    skos:inScheme lca: .
+
+lca:lca_analysis_instances a owl:ObjectProperty ;
+    rdfs:label "lca_analysis_instances" ;
+    skos:definition "Collection of LCA analyses performed on this product system" ;
+    skos:inScheme lca: .
+
+lca:aggregated_scores a owl:ObjectProperty ;
+    rdfs:label "aggregated_scores" ;
+    skos:definition "Optional aggregated scoring results" ;
+    skos:inScheme lca: .
+
+lca:assumptions a owl:DatatypeProperty ;
+    rdfs:label "assumptions" ;
+    skos:definition "Key assumptions made" ;
+    skos:inScheme lca: .
+
+lca:author_name a owl:DatatypeProperty ;
+    rdfs:label "author_name" ;
+    skos:definition "Study author name(s)" ;
+    skos:inScheme lca: .
+
+lca:background_database a owl:DatatypeProperty ;
+    rdfs:label "background_database" ;
+    skos:definition "Background database name" ;
+    skos:inScheme lca: .
+
+lca:calculation_date a owl:DatatypeProperty ;
+    rdfs:label "calculation_date" ;
+    skos:definition "When inventory was accessed" ;
+    skos:inScheme lca: .
+
+lca:calculation_timestamp a owl:DatatypeProperty ;
+    rdfs:label "calculation_timestamp" ;
+    skos:definition "When calculations were performed" ;
+    skos:inScheme lca: .
+
+lca:category_identifier a owl:DatatypeProperty ;
+    rdfs:label "category_identifier" ;
+    skos:definition "Standard identifier for this impact category" ;
+    skos:inScheme lca: .
+
+lca:category_name a owl:DatatypeProperty ;
+    rdfs:label "category_name" ;
+    skos:definition "Name of the impact category" ;
+    skos:inScheme lca: .
+
+lca:characterization_factors a owl:DatatypeProperty ;
+    rdfs:label "characterization_factors" ;
+    skos:definition "Reference to characterization factors" ;
+    skos:inScheme lca: .
+
+lca:commissioner_info a owl:ObjectProperty ;
+    rdfs:label "commissioner_info" ;
+    skos:definition "Information about who commissioned the study" ;
+    skos:inScheme lca: .
+
+lca:completeness_check a owl:DatatypeProperty ;
+    rdfs:label "completeness_check" ;
+    skos:definition "Assessment of data completeness" ;
+    skos:inScheme lca: .
+
+lca:consistency_check a owl:DatatypeProperty ;
+    rdfs:label "consistency_check" ;
+    skos:definition "Assessment of data consistency" ;
+    skos:inScheme lca: .
+
+lca:data_gaps a owl:DatatypeProperty ;
+    rdfs:label "data_gaps" ;
+    skos:definition "Identified data gaps" ;
+    skos:inScheme lca: .
+
+lca:data_quality_assessment a owl:ObjectProperty ;
+    rdfs:label "data_quality_assessment" ;
+    skos:definition "Assessment of data quality aspects" ;
+    skos:inScheme lca: .
+
+lca:data_quality_info a owl:DatatypeProperty ;
+    rdfs:label "data_quality_info" ;
+    skos:definition "Data quality information" ;
+    skos:inScheme lca: .
+
+lca:database_info a owl:ObjectProperty ;
+    rdfs:label "database_info" ;
+    skos:definition "Background database information" ;
+    skos:inScheme lca: .
+
+lca:database_version a owl:DatatypeProperty ;
+    rdfs:label "database_version" ;
+    skos:definition "Database version" ;
+    skos:inScheme lca: .
+
+lca:distribution_type a owl:DatatypeProperty ;
+    rdfs:label "distribution_type" ;
+    skos:definition "Type of uncertainty distribution" ;
+    skos:inScheme lca: .
+
+lca:functional_unit a owl:DatatypeProperty ;
+    rdfs:label "functional_unit" ;
+    skos:definition "Functional unit for the analysis" ;
+    skos:inScheme lca: .
+
+lca:impact_assessment_results a owl:ObjectProperty ;
+    rdfs:label "impact_assessment_results" ;
+    skos:definition "Impact assessment results" ;
+    skos:inScheme lca: .
+
+lca:impact_method a owl:DatatypeProperty ;
+    rdfs:label "impact_method" ;
+    skos:definition "Impact assessment method used" ;
+    skos:inScheme lca: .
+
+lca:indicator_result a owl:ObjectProperty ;
+    rdfs:label "indicator_result" ;
+    skos:definition "Primary indicator result" ;
+    skos:inScheme lca: .
+
+lca:indicator_set_reference a owl:DatatypeProperty ;
+    rdfs:label "indicator_set_reference" ;
+    skos:definition "Reference to indicator set" ;
+    skos:inScheme lca: .
+
+lca:interpretation_results a owl:ObjectProperty ;
+    rdfs:label "interpretation_results" ;
+    skos:definition "Interpretation and quality assessment" ;
+    skos:inScheme lca: .
+
+lca:inventory_checksum a owl:DatatypeProperty ;
+    rdfs:label "inventory_checksum" ;
+    skos:definition "Optional checksum for change detection" ;
+    skos:inScheme lca: .
+
+lca:inventory_results a owl:ObjectProperty ;
+    rdfs:label "inventory_results" ;
+    skos:definition "References to product system inventory data" ;
+    skos:inScheme lca: .
+
+lca:limitations a owl:ObjectProperty ;
+    rdfs:label "limitations" ;
+    skos:definition "Documented limitations and caveats" ;
+    skos:inScheme lca: .
+
+lca:lower_bound a owl:DatatypeProperty ;
+    rdfs:label "lower_bound" ;
+    skos:definition "Lower uncertainty bound" ;
+    skos:inScheme lca: .
+
+lca:method_reference a owl:DatatypeProperty ;
+    rdfs:label "method_reference" ;
+    skos:definition "Reference to method documentation" ;
+    skos:inScheme lca: .
+
+lca:method_version a owl:DatatypeProperty ;
+    rdfs:label "method_version" ;
+    skos:definition "Version of the impact method" ;
+    skos:inScheme lca: .
+
+lca:methodological_choices a owl:DatatypeProperty ;
+    rdfs:label "methodological_choices" ;
+    skos:definition "Key methodological decisions" ;
+    skos:inScheme lca: .
+
+lca:model_uncertainty a owl:DatatypeProperty ;
+    rdfs:label "model_uncertainty" ;
+    skos:definition "Uncertainty from modeling choices" ;
+    skos:inScheme lca: .
+
+lca:normalized_value a owl:DatatypeProperty ;
+    rdfs:label "normalized_value" ;
+    skos:definition "Normalized result" ;
+    skos:inScheme lca: .
+
+lca:numeric_value a owl:DatatypeProperty ;
+    rdfs:label "numeric_value" ;
+    skos:definition "The calculated impact value" ;
+    skos:inScheme lca: .
+
+lca:parameter_uncertainty a owl:DatatypeProperty ;
+    rdfs:label "parameter_uncertainty" ;
+    skos:definition "Uncertainty from parameters" ;
+    skos:inScheme lca: .
+
+lca:practitioner_info a owl:ObjectProperty ;
+    rdfs:label "practitioner_info" ;
+    skos:definition "Information about who conducted the study" ;
+    skos:inScheme lca: .
+
+lca:product_system_reference a owl:DatatypeProperty ;
+    rdfs:label "product_system_reference" ;
+    skos:definition "Reference to product-system model" ;
+    skos:inScheme lca: .
+
+lca:product_system_version a owl:DatatypeProperty ;
+    rdfs:label "product_system_version" ;
+    skos:definition "Version of product system used" ;
+    skos:inScheme lca: .
+
+lca:scenario_uncertainty a owl:DatatypeProperty ;
+    rdfs:label "scenario_uncertainty" ;
+    skos:definition "Uncertainty from scenarios" ;
+    skos:inScheme lca: .
+
+lca:sensitivity_analysis a owl:DatatypeProperty ;
+    rdfs:label "sensitivity_analysis" ;
+    skos:definition "Sensitivity analysis results" ;
+    skos:inScheme lca: .
+
+lca:single_score a owl:DatatypeProperty ;
+    rdfs:label "single_score" ;
+    skos:definition "Aggregated single score value" ;
+    skos:inScheme lca: .
+
+lca:single_score_unit a owl:DatatypeProperty ;
+    rdfs:label "single_score_unit" ;
+    skos:definition "Unit of the single score" ;
+    skos:inScheme lca: .
+
+lca:software_info a owl:ObjectProperty ;
+    rdfs:label "software_info" ;
+    skos:definition "LCA software information" ;
+    skos:inScheme lca: .
+
+lca:software_name a owl:DatatypeProperty ;
+    rdfs:label "software_name" ;
+    skos:definition "Name of LCA software" ;
+    skos:inScheme lca: .
+
+lca:software_version a owl:DatatypeProperty ;
+    rdfs:label "software_version" ;
+    skos:definition "Software version" ;
+    skos:inScheme lca: .
+
+lca:standard_compliance a owl:ObjectProperty ;
+    rdfs:label "standard_compliance" ;
+    skos:definition "Standards and method references" ;
+    skos:inScheme lca: .
+
+lca:study_date a owl:DatatypeProperty ;
+    rdfs:label "study_date" ;
+    skos:definition "Date of the LCA study" ;
+    skos:inScheme lca: .
+
+lca:study_identifier a owl:DatatypeProperty ;
+    rdfs:label "study_identifier" ;
+    skos:definition "Unique identifier for this LCA study" ;
+    skos:inScheme lca: .
+
+lca:study_metadata a owl:ObjectProperty ;
+    rdfs:label "study_metadata" ;
+    skos:definition "Complete metadata for this LCA analysis" ;
+    skos:inScheme lca: .
+
+lca:study_name a owl:DatatypeProperty ;
+    rdfs:label "study_name" ;
+    skos:definition "Name of the LCA study" ;
+    skos:inScheme lca: .
+
+lca:study_scope a owl:DatatypeProperty ;
+    rdfs:label "study_scope" ;
+    skos:definition "Scope and goal of the study" ;
+    skos:inScheme lca: .
+
+lca:system_boundaries a owl:DatatypeProperty ;
+    rdfs:label "system_boundaries" ;
+    skos:definition "System boundaries definition" ;
+    skos:inScheme lca: .
+
+lca:uncertainty_analysis a owl:ObjectProperty ;
+    rdfs:label "uncertainty_analysis" ;
+    skos:definition "Analysis of various uncertainty sources" ;
+    skos:inScheme lca: .
+
+lca:uncertainty_range a owl:ObjectProperty ;
+    rdfs:label "uncertainty_range" ;
+    skos:definition "Uncertainty information for the result" ;
+    skos:inScheme lca: .
+
+lca:unit a owl:DatatypeProperty ;
+    rdfs:label "unit" ;
+    skos:definition "Unit of measurement" ;
+    skos:inScheme lca: .
+
+lca:upper_bound a owl:DatatypeProperty ;
+    rdfs:label "upper_bound" ;
+    skos:definition "Upper uncertainty bound" ;
+    skos:inScheme lca: .
+
+lca:validation_date a owl:DatatypeProperty ;
+    rdfs:label "validation_date" ;
+    skos:definition "Date of validation" ;
+    skos:inScheme lca: .
+
+lca:validation_status a owl:DatatypeProperty ;
+    rdfs:label "validation_status" ;
+    skos:definition "Validation/verification status" ;
+    skos:inScheme lca: .
+
+lca:validator_info a owl:DatatypeProperty ;
+    rdfs:label "validator_info" ;
+    skos:definition "Validator information" ;
+    skos:inScheme lca: .
+
+lca:weighted_result a owl:DatatypeProperty ;
+    rdfs:label "weighted_result" ;
+    skos:definition "Weighted result" ;
+    skos:inScheme lca: .
+
+lca:weighting_set a owl:DatatypeProperty ;
+    rdfs:label "weighting_set" ;
+    skos:definition "Reference to weighting set used" ;
+    skos:inScheme lca: .
+
+lca:contact_info a owl:DatatypeProperty .
+
+lca:organization_name a owl:DatatypeProperty .
+
+
