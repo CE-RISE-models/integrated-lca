@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-title: Project template for data models developed within the CE-RISE Horizon Europe project
+title: CE-RISE Integrated Life Cycle Analysis
 message: >-
-  v0.0.1 - Initial sketch of project template.
+  v0.0.1 - Initial implementation of the Integrated LCA data model with complete 5-step structure for environmental, social, and economic impact assessment.
 type: software
 doi: xxx_to_be_obtained_xxx
 authors:
@@ -14,15 +14,22 @@ identifiers:
   - type: doi
     value: xxx_to_be_obtained_xxx
     description: This DOI represents all software versions.
-repository-code: 'https://codeberg.org/CE-RISE_models/template-data-model'
-url: 'https://ce-rise-models.codeberg.page/template-data-model/'
+repository-code: 'https://codeberg.org/CE-RISE_models/integrated-lca'
+url: 'https://ce-rise-models.codeberg.page/integrated-lca/'
 abstract: >-
-  Project template for data models developed within the CE-RISE Horizon Europe project.
+  Flexible framework for capturing LCA results across environmental, social, and economic dimensions, including methodological metadata, impact assessment results, and data quality indicators. The model provides a reference-based system for indicators and methods, supporting multiple LCA analyses per product system.
 keywords:
   - CE-RISE
+  - Life Cycle Assessment
+  - LCA
+  - Triple Bottom Line
+  - Environmental Impact
+  - Social Impact
+  - Economic Impact
   - Data Model
   - Ontology
   - Open Source
   - Open Science
   - Digital Product Passport
+  - Sustainability Assessment
 license: CC-BY-NC-4.0
