@@ -18,7 +18,7 @@ prefixes:
     qudt: http://qudt.org/schema/qudt/
     iso: https://www.iso.org/standard/
     ilcd: http://lca.jrc.ec.europa.eu/ILCD/
-    schema: https://schema.org/
+    schema: http://schema.org/
 
 default_prefix: lca
 default_range: string
