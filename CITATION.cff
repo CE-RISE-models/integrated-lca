@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: CE-RISE Integrated Life Cycle Analysis
 message: >-
-  v0.0.1 - Initial implementation of the Integrated LCA data model with complete 5-step structure for environmental, social, and economic impact assessment.
+  v0.0.2 - Added refs from Beta data model release.
 type: software
 doi: 10.5281/zenodo.17910373
 authors:

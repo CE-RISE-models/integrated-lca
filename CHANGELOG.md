@@ -2,6 +2,11 @@
 
 All notable changes to the CE-RISE Integrated Life Cycle Analysis Data Model will be documented in this file.
 
+## [0.0.2] - 2025-12-15
+
+### Added
+- Missing references from Beta release of data model.
+
 ## [0.0.1] - 2025-12-12
 
 ### Added
