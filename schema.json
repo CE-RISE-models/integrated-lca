@@ -1,0 +1,705 @@
+{
+    "$defs": {
+        "AggregatedScores": {
+            "additionalProperties": false,
+            "description": "Aggregated assessment scores (single score, normalized, weighted)",
+            "properties": {
+                "normalized_value": {
+                    "description": "Normalized result",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "single_score": {
+                    "description": "Aggregated single score value",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "single_score_unit": {
+                    "description": "Unit of the single score",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "weighted_result": {
+                    "description": "Weighted result",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "weighting_set": {
+                    "description": "Reference to weighting set used",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AggregatedScores",
+            "type": "object"
+        },
+        "CommissionerInfo": {
+            "additionalProperties": false,
+            "description": "Information about the organization that commissioned the LCA",
+            "properties": {
+                "contact_info": {
+                    "description": "Contact information",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "organization_name": {
+                    "description": "Commissioning organization name",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "CommissionerInfo",
+            "type": "object"
+        },
+        "DataQualityAssessment": {
+            "additionalProperties": false,
+            "description": "Data quality evaluation results",
+            "properties": {
+                "completeness_check": {
+                    "description": "Assessment of data completeness",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "consistency_check": {
+                    "description": "Assessment of data consistency",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "sensitivity_analysis": {
+                    "description": "Sensitivity analysis results",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DataQualityAssessment",
+            "type": "object"
+        },
+        "DatabaseInfo": {
+            "additionalProperties": false,
+            "description": "Information about background databases used",
+            "properties": {
+                "background_database": {
+                    "description": "Background database name",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "data_quality_info": {
+                    "description": "Data quality information",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "database_version": {
+                    "description": "Database version",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DatabaseInfo",
+            "type": "object"
+        },
+        "ImpactAssessmentResults": {
+            "additionalProperties": false,
+            "description": "Container for all impact assessment results across environmental, social, and economic dimensions",
+            "properties": {
+                "impact_categories": {
+                    "description": "Collection of impact categories assessed (environmental, social, economic)",
+                    "items": {
+                        "$ref": "#/$defs/ImpactCategory"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ImpactAssessmentResults",
+            "type": "object"
+        },
+        "ImpactCategory": {
+            "additionalProperties": false,
+            "description": "A single impact category with its assessment results",
+            "properties": {
+                "aggregated_scores": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregatedScores"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional aggregated scoring results"
+                },
+                "category_identifier": {
+                    "description": "Standard identifier for this impact category",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "category_name": {
+                    "description": "Name of the impact category",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "characterization_factors": {
+                    "description": "Reference to characterization factors",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "impact_method": {
+                    "description": "Impact assessment method used",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "indicator_result": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/IndicatorResult"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Primary indicator result"
+                },
+                "method_version": {
+                    "description": "Version of the impact method",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ImpactCategory",
+            "type": "object"
+        },
+        "IndicatorResult": {
+            "additionalProperties": false,
+            "description": "Numeric result with unit and uncertainty information",
+            "properties": {
+                "numeric_value": {
+                    "description": "The calculated impact value",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "uncertainty_range": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/UncertaintyRange"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Uncertainty information for the result"
+                },
+                "unit": {
+                    "description": "Unit of measurement",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "IndicatorResult",
+            "type": "object"
+        },
+        "IntegratedLCAResults": {
+            "additionalProperties": false,
+            "description": "Root container for all LCA analysis instances for a product system",
+            "properties": {
+                "lca_analysis_instances": {
+                    "description": "Collection of LCA analyses performed on this product system",
+                    "items": {
+                        "$ref": "#/$defs/LCAAnalysisInstance"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "IntegratedLCAResults",
+            "type": "object"
+        },
+        "InterpretationResults": {
+            "additionalProperties": false,
+            "description": "Quality assessment and interpretation of LCA results",
+            "properties": {
+                "data_quality_assessment": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DataQualityAssessment"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Assessment of data quality aspects"
+                },
+                "limitations": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Limitations"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Documented limitations and caveats"
+                },
+                "uncertainty_analysis": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/UncertaintyAnalysis"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Analysis of various uncertainty sources"
+                }
+            },
+            "title": "InterpretationResults",
+            "type": "object"
+        },
+        "InventoryResults": {
+            "additionalProperties": false,
+            "description": "References to the product system data used (no duplication)",
+            "properties": {
+                "calculation_date": {
+                    "description": "When inventory was accessed",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "inventory_checksum": {
+                    "description": "Optional checksum for change detection",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "product_system_reference": {
+                    "description": "Reference to product-system model",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "product_system_version": {
+                    "description": "Version of product system used",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "InventoryResults",
+            "type": "object"
+        },
+        "LCAAnalysisInstance": {
+            "additionalProperties": false,
+            "description": "A single LCA analysis instance with complete metadata and results",
+            "properties": {
+                "impact_assessment_results": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ImpactAssessmentResults"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Impact assessment results"
+                },
+                "interpretation_results": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/InterpretationResults"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Interpretation and quality assessment"
+                },
+                "inventory_results": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/InventoryResults"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "References to product system inventory data"
+                },
+                "standard_compliance": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardCompliance"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Standards and method references"
+                },
+                "study_metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/LCAStudyMetadata"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Complete metadata for this LCA analysis"
+                }
+            },
+            "title": "LCAAnalysisInstance",
+            "type": "object"
+        },
+        "LCAStudyMetadata": {
+            "additionalProperties": false,
+            "description": "Complete metadata for an LCA study instance",
+            "properties": {
+                "commissioner_info": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CommissionerInfo"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Information about who commissioned the study"
+                },
+                "database_info": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatabaseInfo"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Background database information"
+                },
+                "functional_unit": {
+                    "description": "Functional unit for the analysis",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "practitioner_info": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/PractitionerInfo"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Information about who conducted the study"
+                },
+                "software_info": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SoftwareInfo"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "LCA software information"
+                },
+                "study_date": {
+                    "description": "Date of the LCA study",
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "study_identifier": {
+                    "description": "Unique identifier for this LCA study",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "study_name": {
+                    "description": "Name of the LCA study",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "study_scope": {
+                    "description": "Scope and goal of the study",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "system_boundaries": {
+                    "description": "System boundaries definition",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "LCAStudyMetadata",
+            "type": "object"
+        },
+        "Limitations": {
+            "additionalProperties": false,
+            "description": "Documented study limitations",
+            "properties": {
+                "assumptions": {
+                    "description": "Key assumptions made",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "data_gaps": {
+                    "description": "Identified data gaps",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "methodological_choices": {
+                    "description": "Key methodological decisions",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Limitations",
+            "type": "object"
+        },
+        "PractitionerInfo": {
+            "additionalProperties": false,
+            "description": "Information about the LCA practitioner",
+            "properties": {
+                "author_name": {
+                    "description": "Study author name(s)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "contact_info": {
+                    "description": "Practitioner contact information",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "organization_name": {
+                    "description": "Practitioner organization name",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "PractitionerInfo",
+            "type": "object"
+        },
+        "SoftwareInfo": {
+            "additionalProperties": false,
+            "description": "Information about the LCA software used",
+            "properties": {
+                "calculation_timestamp": {
+                    "description": "When calculations were performed",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "software_name": {
+                    "description": "Name of LCA software",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "software_version": {
+                    "description": "Software version",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SoftwareInfo",
+            "type": "object"
+        },
+        "StandardCompliance": {
+            "additionalProperties": false,
+            "description": "Information about standards compliance and validation",
+            "properties": {
+                "applicable_standards": {
+                    "description": "LCA standards followed",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "indicator_set_reference": {
+                    "description": "Reference to indicator set",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "method_reference": {
+                    "description": "Reference to method documentation",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "validation_date": {
+                    "description": "Date of validation",
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "validation_status": {
+                    "description": "Validation/verification status",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "validator_info": {
+                    "description": "Validator information",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "StandardCompliance",
+            "type": "object"
+        },
+        "UncertaintyAnalysis": {
+            "additionalProperties": false,
+            "description": "Analysis of different uncertainty sources",
+            "properties": {
+                "model_uncertainty": {
+                    "description": "Uncertainty from modeling choices",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "parameter_uncertainty": {
+                    "description": "Uncertainty from parameters",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "scenario_uncertainty": {
+                    "description": "Uncertainty from scenarios",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "UncertaintyAnalysis",
+            "type": "object"
+        },
+        "UncertaintyRange": {
+            "additionalProperties": false,
+            "description": "Uncertainty bounds and distribution information",
+            "properties": {
+                "distribution_type": {
+                    "description": "Type of uncertainty distribution",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lower_bound": {
+                    "description": "Lower uncertainty bound",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "upper_bound": {
+                    "description": "Upper uncertainty bound",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "title": "UncertaintyRange",
+            "type": "object"
+        }
+    },
+    "$id": "https://ce-rise-models.codeberg.page/integrated-lca/",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "metamodel_version": "1.7.0",
+    "title": "integrated-lca",
+    "type": "object",
+    "version": "0.0.1"
+}
+
