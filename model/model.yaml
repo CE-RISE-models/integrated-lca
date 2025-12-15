@@ -63,6 +63,7 @@ slots:
         annotations:
             owl.filler: ilcd:functionalUnit
             sql_identifier: lca_study_functional_unit
+            references: "Berger et al.; CIRPASS"
 
     system_boundaries_value:
         description: "System boundaries definition (cradle-to-gate, cradle-to-grave, gate-to-gate)"
@@ -70,6 +71,7 @@ slots:
         annotations:
             owl.filler: ilcd:systemBoundaries
             sql_identifier: lca_study_system_boundaries
+            references: "Berger et al.; King et al."
 
     # Commissioner Information slots
     commissioner_organization_name_value:
@@ -137,6 +139,7 @@ slots:
         annotations:
             owl.filler: dcterms:source
             sql_identifier: lca_background_database
+            references: "Berger et al.; CIRPASS"
 
     database_version_value:
         description: "Version of the background database"
@@ -151,6 +154,7 @@ slots:
         annotations:
             owl.filler: ilcd:dataQualityIndicator
             sql_identifier: lca_data_quality_info
+            references: "Berger et al."
 
     # Step 2: ImpactAssessmentResults slots
     category_identifier_value:
@@ -166,6 +170,7 @@ slots:
         annotations:
             owl.filler: rdfs:label
             sql_identifier: lca_impact_category_name
+            references: "Berger et al.; King et al."
 
     impact_method_value:
         description: "Impact assessment method used (ReCiPe 2016, ILCD 2.0, UNEP/SETAC, etc.)"
@@ -173,6 +178,7 @@ slots:
         annotations:
             owl.filler: prov:hadPlan
             sql_identifier: lca_impact_method
+            references: "Berger et al.; King et al.; Battery Pass"
 
     impact_method_version_value:
         description: "Version of the impact assessment method"
@@ -180,6 +186,7 @@ slots:
         annotations:
             owl.filler: dcterms:hasVersion
             sql_identifier: lca_impact_method_version
+            references: "Berger et al."
 
     # Indicator Result slots
     numeric_value_value:
@@ -188,6 +195,8 @@ slots:
         annotations:
             owl.filler: qudt:numericValue
             sql_identifier: lca_impact_result_value
+            references: "Battery Pass; King et al.; CE-RISE Deliverable 1.1"
+            comment: "For carbon footprint and material footprint calculations"
 
     result_unit_value:
         description: "Unit of the impact assessment result"
@@ -195,6 +204,7 @@ slots:
         annotations:
             owl.filler: qudt:unit
             sql_identifier: lca_impact_result_unit
+            references: "Battery Pass; King et al."
 
     uncertainty_lower_value:
         description: "Lower bound of uncertainty range"
@@ -224,6 +234,7 @@ slots:
         annotations:
             owl.filler: lca:characterizationFactors
             sql_identifier: lca_characterization_factors
+            references: "Berger et al."
 
     single_score_value:
         description: "Aggregated single score result"
@@ -267,6 +278,7 @@ slots:
         annotations:
             owl.filler: prov:used
             sql_identifier: lca_product_system_ref
+            references: "Berger et al.; CIRPASS"
 
     product_system_version_value:
         description: "Version of the product system used for calculation"
@@ -274,6 +286,7 @@ slots:
         annotations:
             owl.filler: dcterms:hasVersion
             sql_identifier: lca_product_system_version
+            references: "Berger et al."
 
     calculation_date_value:
         description: "Date when inventory was accessed for this analysis"
@@ -288,6 +301,7 @@ slots:
         annotations:
             owl.filler: lca:dataChecksum
             sql_identifier: lca_inventory_checksum
+            references: "Berger et al."
 
     # Step 4: InterpretationResults slots
     completeness_check_value:
@@ -296,6 +310,7 @@ slots:
         annotations:
             owl.filler: lca:completenessCheck
             sql_identifier: lca_completeness_check
+            references: "Berger et al."
 
     sensitivity_analysis_value:
         description: "Results of sensitivity analysis"
@@ -303,6 +318,7 @@ slots:
         annotations:
             owl.filler: lca:sensitivityAnalysis
             sql_identifier: lca_sensitivity_analysis
+            references: "Berger et al."
 
     consistency_check_value:
         description: "Results of consistency assessment"
@@ -310,6 +326,7 @@ slots:
         annotations:
             owl.filler: lca:consistencyCheck
             sql_identifier: lca_consistency_check
+            references: "Berger et al."
 
     parameter_uncertainty_value:
         description: "Assessment of parameter uncertainty"
@@ -317,6 +334,7 @@ slots:
         annotations:
             owl.filler: lca:parameterUncertainty
             sql_identifier: lca_parameter_uncertainty
+            references: "Berger et al."
 
     model_uncertainty_value:
         description: "Assessment of model uncertainty"
@@ -324,6 +342,7 @@ slots:
         annotations:
             owl.filler: lca:modelUncertainty
             sql_identifier: lca_model_uncertainty
+            references: "Berger et al."
 
     scenario_uncertainty_value:
         description: "Assessment of scenario uncertainty"
@@ -338,6 +357,7 @@ slots:
         annotations:
             owl.filler: lca:dataGaps
             sql_identifier: lca_data_gaps
+            references: "Berger et al."
 
     methodological_choices_value:
         description: "Key methodological choices and their implications"
@@ -345,6 +365,7 @@ slots:
         annotations:
             owl.filler: lca:methodologicalChoices
             sql_identifier: lca_methodological_choices
+            references: "Berger et al.; King et al."
 
     assumptions_value:
         description: "Key assumptions made in the analysis"
@@ -352,6 +373,7 @@ slots:
         annotations:
             owl.filler: lca:assumptions
             sql_identifier: lca_assumptions
+            references: "Berger et al."
 
     # Step 5: StandardCompliance slots
     applicable_standards_value:
@@ -361,6 +383,7 @@ slots:
         annotations:
             owl.filler: dcterms:conformsTo
             sql_identifier: lca_applicable_standards
+            references: "ISO 14040:2006; ISO 14044:2006; ISO 14025:2006; ISO 14067:2018; Product Environmental Footprint (PEF); ESPR; King et al.; Battery Pass; CIRPASS"
 
     method_reference_value:
         description: "Link to full method documentation"
@@ -368,6 +391,8 @@ slots:
         annotations:
             owl.filler: dcterms:references
             sql_identifier: lca_method_reference
+            references: "ISO 14067:2018; Berger et al.; King et al.; Battery Pass"
+            comment: "Web link to public carbon footprint study per ISO 14067"
 
     indicator_set_reference_value:
         description: "Reference to indicator set used (ILCD, ReCiPe, etc.) with version"
@@ -375,6 +400,7 @@ slots:
         annotations:
             owl.filler: lca:indicatorSet
             sql_identifier: lca_indicator_set_ref
+            references: "Berger et al.; CIRPASS"
 
     validation_status_value:
         description: "Third-party validation or verification status"
@@ -382,6 +408,7 @@ slots:
         annotations:
             owl.filler: prov:qualifiedAttribution
             sql_identifier: lca_validation_status
+            references: "ESPR; Battery Pass"
 
     validation_date_value:
         description: "Date of validation or verification"
@@ -400,6 +427,8 @@ slots:
 classes:
     IntegratedLCAResults:
         description: "Root container for all LCA analysis instances for a product system"
+        annotations:
+            references: "ESPR; Battery Pass; CIRPASS; King et al.; Berger et al."
         attributes:
             lca_analysis_instances:
                 description: "Collection of LCA analyses performed on this product system"
@@ -408,6 +437,8 @@ classes:
 
     LCAAnalysisInstance:
         description: "A single LCA analysis instance with complete metadata and results"
+        annotations:
+            references: "Battery Pass; King et al.; CE-RISE Deliverable 1.1"
         attributes:
             study_metadata:
                 description: "Complete metadata for this LCA analysis"
@@ -427,6 +458,8 @@ classes:
 
     LCAStudyMetadata:
         description: "Complete metadata for an LCA study instance"
+        annotations:
+            references: "Berger et al.; CIRPASS"
         attributes:
             study_identifier:
                 description: "Unique identifier for this LCA study"
@@ -510,6 +543,9 @@ classes:
 
     ImpactAssessmentResults:
         description: "Container for all impact assessment results across environmental, social, and economic dimensions"
+        annotations:
+            references: "ISO 14040:2006; ISO 14044:2006; Berger et al.; King et al.; Battery Pass; CE-RISE Deliverable 1.1"
+            comment: "Includes carbon footprint, material footprint, and other environmental impacts per ISO 14040 series"
         attributes:
             impact_categories:
                 description: "Collection of impact categories assessed (environmental, social, economic)"
@@ -518,6 +554,9 @@ classes:
 
     ImpactCategory:
         description: "A single impact category with its assessment results"
+        annotations:
+            references: "ISO 14040:2006; Product Environmental Footprint (PEF); Berger et al.; King et al.; Battery Pass; CE-RISE Deliverable 1.1; Cruz et al."
+            comment: "Impact categories include carbon footprint, material footprint, resource consumption, emissions, climate change indicators per ISO 14040 and PEF methodology"
         attributes:
             category_identifier:
                 description: "Standard identifier for this impact category"
@@ -534,6 +573,9 @@ classes:
             indicator_result:
                 description: "Primary indicator result"
                 range: IndicatorResult
+                annotations:
+                    references: "Battery Pass; King et al."
+                    comment: "Includes carbon footprint, material footprint metrics"
             characterization_factors:
                 description: "Reference to characterization factors"
                 range: string
@@ -543,6 +585,9 @@ classes:
 
     IndicatorResult:
         description: "Numeric result with unit and uncertainty information"
+        annotations:
+            references: "Battery Pass; King et al.; CE-RISE Deliverable 1.1"
+            comment: "For carbon footprint, material footprint and other impact indicators"
         attributes:
             numeric_value:
                 description: "The calculated impact value"
@@ -588,6 +633,9 @@ classes:
 
     InventoryResults:
         description: "References to the product system data used (no duplication)"
+        annotations:
+            references: "Berger et al.; CIRPASS"
+            comment: "Inventory data for impact assessment"
         attributes:
             product_system_reference:
                 description: "Reference to product-system model"
@@ -604,6 +652,8 @@ classes:
 
     InterpretationResults:
         description: "Quality assessment and interpretation of LCA results"
+        annotations:
+            references: "Berger et al.; King et al."
         attributes:
             data_quality_assessment:
                 description: "Assessment of data quality aspects"
@@ -617,6 +667,8 @@ classes:
 
     DataQualityAssessment:
         description: "Data quality evaluation results"
+        annotations:
+            references: "Berger et al."
         attributes:
             completeness_check:
                 description: "Assessment of data completeness"
@@ -630,6 +682,8 @@ classes:
 
     UncertaintyAnalysis:
         description: "Analysis of different uncertainty sources"
+        annotations:
+            references: "Berger et al."
         attributes:
             parameter_uncertainty:
                 description: "Uncertainty from parameters"
@@ -643,6 +697,8 @@ classes:
 
     Limitations:
         description: "Documented study limitations"
+        annotations:
+            references: "Berger et al."
         attributes:
             data_gaps:
                 description: "Identified data gaps"
@@ -656,6 +712,8 @@ classes:
 
     StandardCompliance:
         description: "Information about standards compliance and validation"
+        annotations:
+            references: "ISO 14040:2006; ISO 14044:2006; ISO 14025:2006; EU Taxonomy Regulation (EU) 2020/852; ESPR; Battery Pass; CIRPASS; King et al."
         attributes:
             applicable_standards:
                 description: "LCA standards followed"
