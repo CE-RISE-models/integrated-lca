@@ -2,13 +2,26 @@
 
 All notable changes to the CE-RISE Integrated Life Cycle Analysis Data Model will be documented in this file.
 
-## [0.0.2] - 2025-12-15
+## [0.0.3] - 2026-02-03
+### Breaking Changes
+- **BREAKING**: Renamed `product_system_*` fields to `assessed_system_*` (reference, version, SQL identifiers)
 
+### Added
+- Explicit support for Digital Material Passports (DMP) alongside Digital Product Passports (DPP)
+- Unified "assessed-system" model terminology supporting products, materials, components, and assemblies
+- DMP-related keywords to citation metadata
+
+### Changed
+- All documentation and descriptions now use unified "assessed system" terminology
+- Model references single unified `assessed-system` model instead of separate product/material models
+
+
+## [0.0.2] - 2025-12-15
 ### Added
 - Missing references from Beta release of data model.
 
-## [0.0.1] - 2025-12-12
 
+## [0.0.1] - 2025-12-12
 ### Added
 - Initial project structure and repository setup from template: https://ce-rise-models.codeberg.page/template-data-model/
 - Complete data model structure for Integrated Life Cycle Analysis with 5 implementation steps:
@@ -25,7 +38,7 @@ All notable changes to the CE-RISE Integrated Life Cycle Analysis Data Model wil
   - ILCD for LCA-specific concepts
   - QUDT for units and measurements
 - Unique SQL identifiers for all fields following `lca_[category]_[specific]` pattern
-- Support for multiple LCA analyses on the same product system
+- Support for multiple LCA analyses on the same assessed system
 - Triple bottom line support through flexible indicator references
 - Documentation for representing Environmental, Social, and Economic components
 - Artifacts built and deployed to pages

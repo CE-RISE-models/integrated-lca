@@ -2,7 +2,9 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17910373.svg)](https://doi.org/10.5281/zenodo.17910373) [![Schemas](https://img.shields.io/badge/Schema%20Files-LinkML%2C%20JSON%2C%20SHACL%2C%20OWL-32CD32)](https://ce-rise-models.codeberg.page/integrated-lca/)
 
-Repository for the data model used to represent integrated LCA results, including environmental, social, and economic impact indicators, methodological metadata, calculation parameters, characterization choices, and assessment settings. The model captures outcomes of LCA computations, while underlying process and flow data are provided separately by the `product-system` model.
+Repository for the data model used to represent integrated LCA results, including environmental, social, and economic impact indicators, methodological metadata, calculation parameters, characterization choices, and assessment settings. The model captures outcomes of LCA computations, while underlying process and flow data are provided separately by the `assessed-system` model (which can represent products, materials, components, or assemblies).
+
+**Applicability**: This model supports both **Digital Product Passports (DPP)** and **Digital Material Passports (DMP)**, providing a flexible framework for LCA results regardless of whether the assessed entity is a finished product, raw material, component, or assembly.
 
 
 ---
@@ -29,7 +31,7 @@ The Integrated Life Cycle Analysis data model provides a **flexible framework** 
 ### Core Hierarchy
 
 ```
-IntegratedLCAResults (root)
+IntegratedLCAResults (root - for products or materials)
 ├── LCAAnalysisInstance (repeatable - multiple analyses possible)
 │   ├── 1. LCAStudyMetadata
 │   │   ├── StudyIdentifier (REQUIRED - unique UUID)
@@ -74,8 +76,8 @@ IntegratedLCAResults (root)
 │   │           ├── WeightedResult
 │   │           └── WeightingSet
 │   ├── 3. InventoryResults
-│   │   ├── ProductSystemReference (URI/ID to product-system model)
-│   │   ├── ProductSystemVersion (version used for calculation)
+│   │   ├── AssessedSystemReference (URI/ID to assessed system model)
+│   │   ├── AssessedSystemVersion (version used for calculation)
 │   │   ├── CalculationDate (when inventory was accessed)
 │   │   └── InventoryChecksum (optional - to detect source changes)
 │   ├── 4. InterpretationResults
@@ -112,7 +114,7 @@ Complete metadata for each LCA analysis instance:
 - **SystemBoundaries**: Cradle-to-gate, cradle-to-grave, or gate-to-gate
 - **StudyScope**: Goal, intended application, target audience
 
-*Note: Multiple LCAAnalysisInstance objects can exist for the same product system, each with different methods, assumptions, or temporal snapshots.*
+*Note: Multiple LCAAnalysisInstance objects can exist for the same assessed system, each with different methods, assumptions, or temporal snapshots.*
 
 #### **Step 2: ImpactAssessmentResults**
 Flexible structure for any impact indicators:
@@ -126,9 +128,9 @@ Flexible structure for any impact indicators:
 - **AggregatedScores**: Optional single score, normalized, and weighted results
 
 #### **Step 3: InventoryResults**
-References to the product system data used (no duplication):
-- **ProductSystemReference**: URI or ID pointing to the product-system model
-- **ProductSystemVersion**: Which version of the product system was used
+References to the assessed system data used (no duplication):
+- **AssessedSystemReference**: URI or ID pointing to the assessed system model
+- **AssessedSystemVersion**: Which version of the assessed system was used
 - **CalculationDate**: Timestamp when the inventory was accessed for this analysis
 - **InventoryChecksum**: Optional checksum to detect if source data has changed
 
@@ -212,7 +214,7 @@ Every data point in the model includes a `sql_identifier` annotation that serves
 - `lca_study_functional_unit` - Functional unit in study metadata
 - `lca_impact_category_id` - Impact category identifier
 - `lca_impact_result_value` - Numeric result value
-- `lca_inventory_flow_amount` - Elementary flow amount
+- `lca_assessed_system_ref` - Reference to assessed system
 - `lca_method_reference` - Reference to method documentation
 
 This identifier system enables seamless integration with databases and ensures clear data model composition when combining with other CE-RISE data models.
@@ -225,7 +227,7 @@ This identifier system enables seamless integration with databases and ensures c
 |------|-----------|-------------------------|----------------------|--------|--------------|
 | **1** | **LCAStudyMetadata** | • Need for unique study identification<br>• Variable system boundaries<br>• Different functional units<br>• Commissioner/practitioner tracking | • UUID-based study identifiers<br>• Flexible boundary definitions<br>• Standardized functional unit format<br>• Clear actor identification | **COMPLETED** | • Study registry integration<br>• Automated metadata extraction |
 | **2** | **ImpactAssessmentResults** | • Multiple indicator standards<br>• Evolving impact methods<br>• Need for flexibility<br>• Method versioning | • Reference-based indicator system<br>• Support for any impact method<br>• Version tracking for methods<br>• URI/UUID for indicators | **COMPLETED** | • Indicator registry APIs<br>• Automatic method updates<br>• Cross-method mapping |
-| **3** | **InventoryResults** | • Avoiding data duplication<br>• Maintaining traceability<br>• Version control of inputs<br>• Detecting source changes | • Reference-only approach<br>• Link to product-system model<br>• Version tracking<br>• Optional checksums | **COMPLETED** | • Automatic reference validation<br>• Version compatibility checks<br>• Change detection alerts |
+| **3** | **InventoryResults** | • Avoiding data duplication<br>• Maintaining traceability<br>• Version control of inputs<br>• Detecting source changes | • Reference-only approach<br>• Link to assessed system model<br>• Version tracking<br>• Optional checksums | **COMPLETED** | • Automatic reference validation<br>• Version compatibility checks<br>• Change detection alerts |
 | **4** | **InterpretationResults** | • Quality assessment standards<br>• Uncertainty quantification<br>• Sensitivity analysis methods<br>• Documentation requirements | • Pedigree matrix implementation<br>• Multiple uncertainty methods<br>• Standardized sensitivity metrics<br>• Structured limitations | **COMPLETED** | • Automated quality scoring<br>• Uncertainty propagation tools |
 | **5** | **StandardCompliance** | • Multiple LCA standards<br>• Method documentation links<br>• Indicator set versions<br>• Validation tracking | • Standard reference system<br>• External method links<br>• Version control for indicators<br>• Validation status fields | **COMPLETED** | • Standard compliance checker<br>• Automated validation |
 

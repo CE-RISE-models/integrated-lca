@@ -4,8 +4,9 @@ title: CE-RISE Integrated Life Cycle Analysis Data Model
 description: >
     Flexible framework for capturing LCA results across environmental, social, and economic dimensions,
     including methodological metadata, impact assessment results, and data quality indicators.
+    Supports both Digital Product Passports (DPP) and Digital Material Passports (DMP).
 license: CC BY-NC 4.0
-version: 0.0.1
+version: 0.0.3
 
 prefixes:
     linkml: https://w3id.org/linkml/
@@ -272,20 +273,20 @@ slots:
             sql_identifier: lca_weighting_set
 
     # Step 3: InventoryResults slots (reference-only approach)
-    product_system_reference_value:
-        description: "URI or ID pointing to the product-system model used"
+    assessed_system_reference_value:
+        description: "URI or ID pointing to the assessed system model used"
         range: string
         annotations:
             owl.filler: prov:used
-            sql_identifier: lca_product_system_ref
+            sql_identifier: lca_assessed_system_ref
             references: "Berger et al.; CIRPASS"
 
-    product_system_version_value:
-        description: "Version of the product system used for calculation"
+    assessed_system_version_value:
+        description: "Version of the assessed system used for calculation"
         range: string
         annotations:
             owl.filler: dcterms:hasVersion
-            sql_identifier: lca_product_system_version
+            sql_identifier: lca_assessed_system_version
             references: "Berger et al."
 
     calculation_date_value:
@@ -426,12 +427,12 @@ slots:
 
 classes:
     IntegratedLCAResults:
-        description: "Root container for all LCA analysis instances for a product system"
+        description: "Root container for all LCA analysis instances for an assessed system"
         annotations:
             references: "ESPR; Battery Pass; CIRPASS; King et al.; Berger et al."
         attributes:
             lca_analysis_instances:
-                description: "Collection of LCA analyses performed on this product system"
+                description: "Collection of LCA analyses performed on this assessed system"
                 range: LCAAnalysisInstance
                 multivalued: true
 
@@ -447,7 +448,7 @@ classes:
                 description: "Impact assessment results"
                 range: ImpactAssessmentResults
             inventory_results:
-                description: "References to product system inventory data"
+                description: "References to assessed system inventory data"
                 range: InventoryResults
             interpretation_results:
                 description: "Interpretation and quality assessment"
@@ -632,16 +633,16 @@ classes:
                 range: string
 
     InventoryResults:
-        description: "References to the product system data used (no duplication)"
+        description: "References to the assessed system data used (no duplication)"
         annotations:
             references: "Berger et al.; CIRPASS"
             comment: "Inventory data for impact assessment"
         attributes:
-            product_system_reference:
-                description: "Reference to product-system model"
+            assessed_system_reference:
+                description: "Reference to assessed system model"
                 range: string
-            product_system_version:
-                description: "Version of product system used"
+            assessed_system_version:
+                description: "Version of assessed system used"
                 range: string
             calculation_date:
                 description: "When inventory was accessed"

@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: CE-RISE Integrated Life Cycle Analysis
 message: >-
-  v0.0.2 - Added refs from Beta data model release.
+  v0.0.3 - Added support for Digital Material Passports (DMP) alongside Digital Product Passports (DPP).
 type: software
 doi: 10.5281/zenodo.17910373
 authors:
@@ -17,7 +17,7 @@ identifiers:
 repository-code: 'https://codeberg.org/CE-RISE_models/integrated-lca'
 url: 'https://ce-rise-models.codeberg.page/integrated-lca/'
 abstract: >-
-  Flexible framework for capturing LCA results across environmental, social, and economic dimensions, including methodological metadata, impact assessment results, and data quality indicators. The model provides a reference-based system for indicators and methods, supporting multiple LCA analyses per product system.
+  Flexible framework for capturing LCA results across environmental, social, and economic dimensions, including methodological metadata, impact assessment results, and data quality indicators. The model provides a reference-based system for indicators and methods, supporting multiple LCA analyses per assessed system. Applicable to both Digital Product Passports (DPP) and Digital Material Passports (DMP).
 keywords:
   - CE-RISE
   - Life Cycle Assessment
@@ -31,5 +31,8 @@ keywords:
   - Open Source
   - Open Science
   - Digital Product Passport
+  - DPP
+  - Digital Material Passport
+  - DMP
   - Sustainability Assessment
 license: CC-BY-NC-4.0
