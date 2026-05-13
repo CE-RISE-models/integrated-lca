@@ -6,7 +6,7 @@ description: >
     including methodological metadata, impact assessment results, and data quality indicators.
     Supports both Digital Product Passports (DPP) and Digital Material Passports (DMP).
 license: CC BY-NC 4.0
-version: 0.0.3
+version: 0.1.0
 
 prefixes:
     linkml: https://w3id.org/linkml/
@@ -20,12 +20,18 @@ prefixes:
     iso: https://www.iso.org/standard/
     ilcd: http://lca.jrc.ec.europa.eu/ILCD/
     schema: http://schema.org/
+    uq: https://ce-rise-models.codeberg.page/uncertainty-quantification/
+    mt: https://ce-rise-models.codeberg.page/metrological-traceability/
+    dqf: https://ce-rise-models.codeberg.page/data-quality-framework/
 
 default_prefix: lca
 default_range: string
 
 imports:
     - linkml:types
+    - https://codeberg.org/CE-RISE-models/uncertainty-quantification/raw/tag/pages-v0.0.3/generated/schema
+    - https://codeberg.org/CE-RISE-models/metrological-traceability/raw/tag/pages-v0.0.3/generated/schema
+    - https://codeberg.org/CE-RISE-models/data-quality-framework/raw/tag/pages-v0.0.3/generated/schema
 
 slots:
     # Step 1: LCAStudyMetadata slots
@@ -173,7 +179,7 @@ slots:
             sql_identifier: lca_impact_category_name
             references: "Berger et al.; King et al."
 
-    impact_method_value:
+    lca_impact_method_value:
         description: "Impact assessment method used (ReCiPe 2016, ILCD 2.0, UNEP/SETAC, etc.)"
         range: string
         annotations:
@@ -190,7 +196,7 @@ slots:
             references: "Berger et al."
 
     # Indicator Result slots
-    numeric_value_value:
+    lca_numeric_value_value:
         description: "Numeric result of the impact assessment"
         range: float
         annotations:
@@ -492,6 +498,26 @@ classes:
             database_info:
                 description: "Background database information"
                 range: DatabaseInfo
+            study_metadata_metrological_traceability_statements:
+                description: "Optional metrological traceability statements for the functional unit, system boundaries, method definitions, software, database versions, or calculation environment"
+                range: TraceabilityStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: lca_study_metadata_metrological_traceability
+            study_metadata_data_quality_assessments:
+                description: "Optional data quality assessments for study metadata, source documentation, completeness, temporal representativeness, or fitness for purpose"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_study_metadata_data_quality_assessments
 
     CommissionerInfo:
         description: "Information about the organization that commissioned the LCA"
@@ -541,6 +567,16 @@ classes:
             data_quality_info:
                 description: "Data quality information"
                 range: string
+            database_data_quality_assessments:
+                description: "Optional data quality assessments for background database selection, version, provenance, temporal coverage, geographic coverage, or representativeness"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_database_data_quality_assessments
 
     ImpactAssessmentResults:
         description: "Container for all impact assessment results across environmental, social, and economic dimensions"
@@ -583,6 +619,26 @@ classes:
             aggregated_scores:
                 description: "Optional aggregated scoring results"
                 range: AggregatedScores
+            impact_category_metrological_traceability_statements:
+                description: "Optional metrological traceability statements for impact method, characterization factors, indicator definitions, or method-version references"
+                range: TraceabilityStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: lca_impact_category_metrological_traceability
+            impact_category_data_quality_assessments:
+                description: "Optional data quality assessments for impact category selection, method mapping, characterization factors, or indicator-set provenance"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_impact_category_data_quality_assessments
 
     IndicatorResult:
         description: "Numeric result with unit and uncertainty information"
@@ -599,6 +655,36 @@ classes:
             uncertainty_range:
                 description: "Uncertainty information for the result"
                 range: UncertaintyRange
+            indicator_uncertainty_statements:
+                description: "Optional uncertainty statements for numeric impact results, calculation assumptions, distributions, confidence intervals, or propagation results"
+                range: UncertaintyStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: lca_indicator_uncertainty_statements
+            indicator_metrological_traceability_statements:
+                description: "Optional metrological traceability statements for result calculation chains, input datasets, reference flows, functional units, methods, standards, or boundary definitions"
+                range: TraceabilityStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: lca_indicator_metrological_traceability
+            indicator_data_quality_assessments:
+                description: "Optional data quality assessments for indicator result data, provenance, completeness, representativeness, or fitness for comparison"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_indicator_data_quality_assessments
 
     UncertaintyRange:
         description: "Uncertainty bounds and distribution information"
@@ -612,6 +698,16 @@ classes:
             distribution_type:
                 description: "Type of uncertainty distribution"
                 range: string
+            uncertainty_range_statements:
+                description: "Optional structured uncertainty statements for the uncertainty range, distribution, coverage, or uncertainty budget"
+                range: UncertaintyStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: lca_uncertainty_range_statements
 
     AggregatedScores:
         description: "Aggregated assessment scores (single score, normalized, weighted)"
@@ -631,6 +727,36 @@ classes:
             weighting_set:
                 description: "Reference to weighting set used"
                 range: string
+            aggregated_score_uncertainty_statements:
+                description: "Optional uncertainty statements for single score, normalized value, weighted result, weighting-set assumptions, or aggregation sensitivity"
+                range: UncertaintyStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: lca_aggregated_score_uncertainty_statements
+            aggregated_score_metrological_traceability_statements:
+                description: "Optional metrological traceability statements for normalization references, weighting sets, aggregation methods, or calculation chains"
+                range: TraceabilityStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: lca_aggregated_score_metrological_traceability
+            aggregated_score_data_quality_assessments:
+                description: "Optional data quality assessments for aggregated score inputs, weighting assumptions, provenance, completeness, or comparability"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_aggregated_score_data_quality_assessments
 
     InventoryResults:
         description: "References to the assessed system data used (no duplication)"
@@ -650,6 +776,26 @@ classes:
             inventory_checksum:
                 description: "Optional checksum for change detection"
                 range: string
+            inventory_metrological_traceability_statements:
+                description: "Optional metrological traceability statements for assessed-system references, inventory versions, data extraction, checksums, or calculation chains"
+                range: TraceabilityStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: lca_inventory_metrological_traceability
+            inventory_data_quality_assessments:
+                description: "Optional data quality assessments for inventory data, source version, provenance, completeness, representativeness, or checksum reliability"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_inventory_data_quality_assessments
 
     InterpretationResults:
         description: "Quality assessment and interpretation of LCA results"
@@ -658,7 +804,7 @@ classes:
         attributes:
             data_quality_assessment:
                 description: "Assessment of data quality aspects"
-                range: DataQualityAssessment
+                range: LCADataQualityAssessment
             uncertainty_analysis:
                 description: "Analysis of various uncertainty sources"
                 range: UncertaintyAnalysis
@@ -666,7 +812,7 @@ classes:
                 description: "Documented limitations and caveats"
                 range: Limitations
 
-    DataQualityAssessment:
+    LCADataQualityAssessment:
         description: "Data quality evaluation results"
         annotations:
             references: "Berger et al."
@@ -680,6 +826,16 @@ classes:
             consistency_check:
                 description: "Assessment of data consistency"
                 range: string
+            lca_data_quality_assessments:
+                description: "Optional structured data quality assessments for LCA completeness, sensitivity, consistency, pedigree, or fitness for purpose"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_interpretation_data_quality_assessments
 
     UncertaintyAnalysis:
         description: "Analysis of different uncertainty sources"
@@ -695,6 +851,16 @@ classes:
             scenario_uncertainty:
                 description: "Uncertainty from scenarios"
                 range: string
+            uncertainty_analysis_statements:
+                description: "Optional structured uncertainty statements for parameter, model, scenario, sensitivity, or propagation uncertainty"
+                range: UncertaintyStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: lca_interpretation_uncertainty_statements
 
     Limitations:
         description: "Documented study limitations"
@@ -710,6 +876,16 @@ classes:
             assumptions:
                 description: "Key assumptions made"
                 range: string
+            limitations_data_quality_assessments:
+                description: "Optional data quality assessments for data gaps, assumptions, methodological choices, limitations, or intended-use constraints"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_limitations_data_quality_assessments
 
     StandardCompliance:
         description: "Information about standards compliance and validation"
@@ -735,3 +911,23 @@ classes:
             validator_info:
                 description: "Validator information"
                 range: string
+            standard_compliance_metrological_traceability_statements:
+                description: "Optional metrological traceability statements for standards, method references, indicator sets, validation procedures, or verifier evidence"
+                range: TraceabilityStatement
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: lca_standard_compliance_metrological_traceability
+            standard_compliance_data_quality_assessments:
+                description: "Optional data quality assessments for standard compliance evidence, validation status, method references, indicator-set references, or verifier provenance"
+                range: DataQualityAssessment
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: lca_standard_compliance_data_quality_assessments

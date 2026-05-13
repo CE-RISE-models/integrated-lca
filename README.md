@@ -81,7 +81,7 @@ IntegratedLCAResults (root - for products or materials)
 │   │   ├── CalculationDate (when inventory was accessed)
 │   │   └── InventoryChecksum (optional - to detect source changes)
 │   ├── 4. InterpretationResults
-│   │   ├── DataQualityAssessment
+│   │   ├── LCADataQualityAssessment
 │   │   │   ├── CompletenessCheck
 │   │   │   ├── SensitivityAnalysis
 │   │   │   └── ConsistencyCheck
@@ -136,7 +136,7 @@ References to the assessed system data used (no duplication):
 
 #### **Step 4: InterpretationResults**
 Quality and reliability assessment:
-- **DataQualityAssessment**: Completeness, sensitivity, consistency checks
+- **LCADataQualityAssessment**: Completeness, sensitivity, consistency checks
 - **UncertaintyAnalysis**: Parameter, model, and scenario uncertainties
 - **Limitations**: Documented data gaps and assumptions
 
@@ -238,6 +238,7 @@ This identifier system enables seamless integration with databases and ensures c
 - **Databases**: ecoinvent, GaBi databases, Agri-footprint, Social Hotspots Database
 - **Standards**: ISO 14040 series, GHG Protocol, UNEP/SETAC S-LCA guidelines
 - **Reporting**: Environmental Product Declarations (EPD), Product Environmental Footprint (PEF)
+- **CE-RISE Utility Models**: LCA metadata, database information, impact categories, indicator results, uncertainty ranges, aggregated scores, inventory references, interpretation records, limitations, and standard-compliance records can optionally reference `uncertainty-quantification`, `metrological-traceability`, and `data-quality-framework` records where relevant
 
 
 
@@ -248,7 +249,7 @@ This identifier system enables seamless integration with databases and ensures c
 Release artifacts for each version (`schema.json`, `shacl.ttl`, `model.owl`)  
 are served directly from this URL:
 ```
-https://ce-rise-models.codeberg.page/<repo-name>/
+https://ce-rise-models.codeberg.page/integrated-lca/
 ```
 
 
@@ -256,10 +257,10 @@ https://ce-rise-models.codeberg.page/<repo-name>/
 
 ## Accessing Previous Releases
 
-If you want to view the files published for version `v1.2.0`, open:
+If you want to view the files published for version `v0.1.0`, open:
 
 ```
-https://codeberg.org/CE-RISE-models/<repo-name>/src/tag/pages-v1.2.0/generated/
+https://codeberg.org/CE-RISE-models/integrated-lca/src/tag/pages-v0.1.0/generated/
 ```
 
 Files available in that directory typically include:

@@ -2,6 +2,15 @@
 
 All notable changes to the CE-RISE Integrated Life Cycle Analysis Data Model will be documented in this file.
 
+## [0.1.0] - 2026-05-13
+### Added
+- Optional links from LCA metadata, database information, impact categories, indicator results, uncertainty ranges, aggregated scores, inventory references, interpretation records, limitations, and standard-compliance records to the CE-RISE uncertainty quantification, metrological traceability, and data quality framework utility models.
+- Utility-model fields are optional, so existing LCA records without additional uncertainty, traceability, or data quality detail remain valid.
+
+### Changed
+- Renamed the local interpretation data-quality class from `DataQualityAssessment` to `LCADataQualityAssessment` to avoid a name collision with the imported CE-RISE data quality framework utility model.
+- Prefixed local slot names `impact_method_value` and `numeric_value_value` with `lca_` to avoid import collisions with utility-model slots while preserving their existing `sql_identifier` annotations.
+
 ## [0.0.3] - 2026-02-03
 ### Breaking Changes
 - **BREAKING**: Renamed `product_system_*` fields to `assessed_system_*` (reference, version, SQL identifiers)
