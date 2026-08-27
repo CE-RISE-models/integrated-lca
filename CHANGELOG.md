@@ -2,6 +2,19 @@
 
 All notable changes to the CE-RISE Integrated Life Cycle Analysis Data Model will be documented in this file.
 
+## [0.2.0] - 2026-08-27
+### Added
+- Explicit environmental, social, economic, integrated, and other assessment dimensions.
+- Versioned references to product-system, CE-RISE model, external-model, and dataset inputs.
+- Assessment toolchains with PROV-O mappings for inputs and tool executions.
+- Structured functional-unit and assessment-boundary specifications.
+- Optional assessment-indicator results partitioned by life cycle stage.
+
+### Changed
+- **BREAKING**: Renamed `impact_assessment_results` / `ImpactAssessmentResults` to `assessment_results` / `AssessmentResults` and `ImpactCategory` to `AssessmentIndicator`.
+- **BREAKING**: Renamed `inventory_results` / `InventoryResults` to `assessment_inputs` / `AssessmentInputSet`.
+- **BREAKING**: Renamed `AggregatedScores` to `AggregatedResults`.
+
 ## [0.1.0] - 2026-05-13
 ### Added
 - Optional links from LCA metadata, database information, impact categories, indicator results, uncertainty ranges, aggregated scores, inventory references, interpretation records, limitations, and standard-compliance records to the CE-RISE uncertainty quantification, metrological traceability, and data quality framework utility models.
